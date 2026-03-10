@@ -1,42 +1,12 @@
-const express = require("express");
+const express = require('express');
+const path = require('path');
 const app = express();
 
-// Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'))
-// Routes
-app.get("/mesage", (req, res) => {
-  res.json({
-    message: "🚂 Railway Express App is running!",
-    status: "success",
-    timestamp: new Date().toISOString(),
-  });
-});
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
-});
-
-app.get("/api/greet/:name", (req, res) => {
-  const { name } = req.params;
-  res.json({ message: `Hello, ${name}! Welcome to Railway 🎉` });
-});
-
-app.post("/api/echo", (req, res) => {
-  const body = req.body;
-  res.json({ received: body });
-});
-
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ error: "Route not found" });
-});
-
-// Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello World' });
 });
 
 module.exports = app;
