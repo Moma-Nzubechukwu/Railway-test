@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shadow — 52-Week Dev Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --bg2: #111115;
+    --bg3: #18181e;
+    --border: #2a2a35;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --phase1: #22d3ee;
+    --phase2: #a78bfa;
+    --phase3: #fb923c;
+    --phase4: #f43f5e;
+    --transition-color: #fbbf24;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; line-height: 1.5; min-height: 100vh; }
+
+  /* HEADER */
+  .header { position: relative; padding: 60px 48px 48px; border-bottom: 1px solid var(--border); overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -120px; left: -80px; width: 600px; height: 400px; background: radial-gradient(ellipse at 30% 50%, rgba(167,139,250,0.12), transparent 70%); pointer-events: none; }
+  .header::after { content: ''; position: absolute; top: -60px; right: -100px; width: 500px; height: 350px; background: radial-gradient(ellipse at 70% 40%, rgba(34,211,238,0.08), transparent 70%); pointer-events: none; }
+  .header-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
+  .header h1 { font-family: 'Bebas Neue', cursive; font-size: clamp(52px, 8vw, 96px); letter-spacing: 0.02em; line-height: 0.95; background: linear-gradient(135deg, #e8e8f0 0%, #a78bfa 50%, #22d3ee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 20px; }
+  .header-meta { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 20px; }
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .meta-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
+  .meta-value { font-size: 14px; font-weight: 600; color: var(--text); }
+
+  /* LEGEND */
+  .legend { padding: 24px 48px; background: var(--bg2); border-bottom: 1px solid var(--border); display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start; }
+  .legend-group { display: flex; flex-direction: column; gap: 8px; }
+  .legend-title { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+  .legend-items { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 4px; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap; }
+  .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.7; }
+  .pill-py   { background: rgba(74,144,217,0.15); color: #7bb8f0; border: 1px solid rgba(74,144,217,0.3); }
+  .pill-js   { background: rgba(240,196,25,0.12); color: #f0c419; border: 1px solid rgba(240,196,25,0.3); }
+  .pill-node { background: rgba(109,179,96,0.12); color: #8dd07b; border: 1px solid rgba(109,179,96,0.3); }
+  .pill-react{ background: rgba(97,218,251,0.10); color: #61dafb; border: 1px solid rgba(97,218,251,0.25); }
+  .pill-html { background: rgba(226,98,59,0.12); color: #f08060; border: 1px solid rgba(226,98,59,0.3); }
+  .pill-flutter { background: rgba(84,197,248,0.12); color: #54c5f8; border: 1px solid rgba(84,197,248,0.3); }
+  .pill-rust { background: rgba(206,75,43,0.15); color: #e07055; border: 1px solid rgba(206,75,43,0.35); }
+  .pill-c    { background: rgba(160,180,200,0.12); color: #a0b4c8; border: 1px solid rgba(160,180,200,0.3); }
+  .pill-cpp  { background: rgba(74,156,196,0.12); color: #5eb0e0; border: 1px solid rgba(74,156,196,0.3); }
+  .pill-csharp { background: rgba(156,91,170,0.12); color: #c080d8; border: 1px solid rgba(156,91,170,0.3); }
+  .pill-java { background: rgba(232,151,30,0.12); color: #e8b040; border: 1px solid rgba(232,151,30,0.3); }
+  .pill-asm  { background: rgba(255,104,64,0.12); color: #ff8060; border: 1px solid rgba(255,104,64,0.3); }
+  .phase-pill { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 4px; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; }
+  .pp1 { background: rgba(34,211,238,0.12); color: var(--phase1); border: 1px solid rgba(34,211,238,0.3); }
+  .pp2 { background: rgba(167,139,250,0.12); color: var(--phase2); border: 1px solid rgba(167,139,250,0.3); }
+  .pp3 { background: rgba(251,146,60,0.12); color: var(--phase3); border: 1px solid rgba(251,146,60,0.3); }
+  .pp4 { background: rgba(244,63,94,0.12); color: var(--phase4); border: 1px solid rgba(244,63,94,0.3); }
+
+  /* SUMMARY */
+  .summary-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1px; background: var(--border); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .summary-cell { background: var(--bg2); padding: 16px 20px; display: flex; flex-direction: column; gap: 4px; }
+  .summary-cell .val { font-family: 'Bebas Neue', cursive; font-size: 32px; letter-spacing: 0.04em; line-height: 1; }
+  .summary-cell .lbl { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+
+  /* PHASE HEADER */
+  .phase-header { padding: 20px 48px 12px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px); background: rgba(10,10,12,0.85); border-bottom: 1px solid var(--border); }
+  .phase-header h2 { font-family: 'Bebas Neue', cursive; font-size: 22px; letter-spacing: 0.08em; }
+  .phase-header p { font-size: 12px; color: var(--muted); font-style: italic; }
+  .phase-divider { flex: 1; height: 1px; background: var(--border); }
+
+  /* WEEK CARD */
+  .week-card { display: grid; grid-template-columns: 88px 1fr; border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .week-card:hover { background: rgba(255,255,255,0.015); }
+  .week-card.break-week { background: rgba(55,65,81,0.08); }
+  .week-card.transition-week { background: rgba(251,191,36,0.03); border-bottom-color: rgba(251,191,36,0.25); }
+  .week-sidebar { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 16px 8px 16px 16px; border-right: 1px solid var(--border); gap: 5px; }
+  .week-num { font-family: 'Bebas Neue', cursive; font-size: 28px; letter-spacing: 0.04em; line-height: 1; }
+  .week-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+  .week-date { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--muted); text-align: center; margin-top: 4px; }
+  .phase-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 4px; }
+  .p1 .week-num { color: var(--phase1); } .p1 .phase-dot { background: var(--phase1); }
+  .p2 .week-num { color: var(--phase2); } .p2 .phase-dot { background: var(--phase2); }
+  .p3 .week-num { color: var(--phase3); } .p3 .phase-dot { background: var(--phase3); }
+  .p4 .week-num { color: var(--phase4); } .p4 .phase-dot { background: var(--phase4); }
+
+  /* CONTENT */
+  .week-content { padding: 14px 20px; }
+  .break-content { display: flex; align-items: center; gap: 12px; padding: 18px 20px; }
+  .break-icon { font-size: 18px; flex-shrink: 0; }
+  .break-text { font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; }
+  .break-week .break-text { color: var(--muted); }
+  .transition-week .break-text { color: var(--transition-color); }
+  .break-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* DIFFICULTY */
+  .difficulty { display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 3px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .diff-beginner { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
+  .diff-intermediate { background: rgba(251,191,36,0.1); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+  .diff-advanced { background: rgba(251,146,60,0.1); color: #fb923c; border: 1px solid rgba(251,146,60,0.2); }
+  .diff-pro { background: rgba(244,63,94,0.1); color: #f43f5e; border: 1px solid rgba(244,63,94,0.2); }
+
+  /* PROJECTS */
+  .projects-grid { display: flex; flex-direction: column; gap: 0; }
+
+  /* Project row — clickable */
+  .project-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 8px;
+    padding: 6px 8px 6px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.1s;
+    border-bottom: 1px solid transparent;
+  }
+  .project-row:hover { background: rgba(255,255,255,0.03); }
+  .project-row.open { background: rgba(255,255,255,0.04); border-bottom-color: var(--border); }
+  .project-lang { flex-shrink: 0; padding-top: 2px; }
+  .project-right { display: flex; flex-direction: column; gap: 2px; }
+  .project-name-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .project-name { font-size: 12.5px; color: #c8c8d8; font-weight: 500; }
+  .expand-icon { font-size: 10px; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; }
+  .project-row.open .expand-icon { transform: rotate(180deg); }
+
+  /* Description panel */
+  .project-desc {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding: 6px 0 4px 0;
+    display: none;
+    border-top: 1px dashed rgba(255,255,255,0.06);
+    margin-top: 4px;
+  }
+  .project-desc.visible { display: block; }
+  .project-desc em { color: #9898b0; font-style: normal; }
+
+  /* FOOTER */
+  .footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; color: var(--muted); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .hint { padding: 10px 48px; background: rgba(167,139,250,0.05); border-bottom: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; }
+  .hint span { color: var(--phase2); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">// Developer Growth Plan · 2026–2027</div>
+  <h1>Shadow's 52-Week<br>Roadmap</h1>
+  <div class="header-meta">
+    <div class="meta-item"><span class="meta-label">Start Date</span><span class="meta-value">Mar 16, 2026</span></div>
+    <div class="meta-item"><span class="meta-label">End Date</span><span class="meta-value">Mar 15, 2027</span></div>
+    <div class="meta-item"><span class="meta-label">Total Weeks</span><span class="meta-value">52</span></div>
+    <div class="meta-item"><span class="meta-label">Active Weeks</span><span class="meta-value">42</span></div>
+    <div class="meta-item"><span class="meta-label">Rest/Transition</span><span class="meta-value">10</span></div>
+    <div class="meta-item"><span class="meta-label">Languages</span><span class="meta-value">12</span></div>
+  </div>
+</div>
+
+<div class="summary-strip">
+  <div class="summary-cell"><span class="val" style="color:var(--phase1)">10</span><span class="lbl">Phase 1 · Foundation</span></div>
+  <div class="summary-cell"><span class="val" style="color:var(--phase2)">21</span><span class="lbl">Phase 2 · Intermediate</span></div>
+  <div class="summary-cell"><span class="val" style="color:var(--phase3)">8</span><span class="lbl">Phase 3 · Advanced</span></div>
+  <div class="summary-cell"><span class="val" style="color:var(--phase4)">3</span><span class="lbl">Phase 4 · Pro</span></div>
+  <div class="summary-cell"><span class="val" style="color:var(--transition-color)">3</span><span class="lbl">Transition Weeks</span></div>
+  <div class="summary-cell"><span class="val" style="color:var(--muted)">7</span><span class="lbl">Rest Weeks</span></div>
+</div>
+
+<div class="legend">
+  <div class="legend-group">
+    <div class="legend-title">From Day One</div>
+    <div class="legend-items">
+      <span class="pill pill-py"><span class="pill-dot"></span>Python</span>
+      <span class="pill pill-js"><span class="pill-dot"></span>JS</span>
+      <span class="pill pill-node"><span class="pill-dot"></span>Node.js</span>
+      <span class="pill pill-react"><span class="pill-dot"></span>React</span>
+      <span class="pill pill-html"><span class="pill-dot"></span>HTML/CSS</span>
+    </div>
+  </div>
+  <div class="legend-group">
+    <div class="legend-title">Added ~June (Wk 13)</div>
+    <div class="legend-items">
+      <span class="pill pill-flutter"><span class="pill-dot"></span>Flutter</span>
+      <span class="pill pill-rust"><span class="pill-dot"></span>Rust</span>
+    </div>
+  </div>
+  <div class="legend-group">
+    <div class="legend-title">Added ~Dec (Wk 39)</div>
+    <div class="legend-items">
+      <span class="pill pill-c"><span class="pill-dot"></span>C</span>
+      <span class="pill pill-cpp"><span class="pill-dot"></span>C++</span>
+      <span class="pill pill-csharp"><span class="pill-dot"></span>C#</span>
+      <span class="pill pill-java"><span class="pill-dot"></span>Java</span>
+    </div>
+  </div>
+  <div class="legend-group">
+    <div class="legend-title">Added ~Feb (Wk 49)</div>
+    <div class="legend-items">
+      <span class="pill pill-asm"><span class="pill-dot"></span>Assembly</span>
+    </div>
+  </div>
+  <div class="legend-group">
+    <div class="legend-title">Phases</div>
+    <div class="legend-items">
+      <span class="phase-pill pp1">P1 · Foundation</span>
+      <span class="phase-pill pp2">P2 · Intermediate</span>
+      <span class="phase-pill pp3">P3 · Advanced</span>
+      <span class="phase-pill pp4">P4 · Pro</span>
+    </div>
+  </div>
+</div>
+
+<div class="hint">
+  <span>▾ Click any project</span> to read a description of what it is and what concepts it covers.
+</div>
+
+<div id="roadmap"></div>
+
+<div class="footer">
+  <span>SHADOW · MECHATRONICS × SOFTWARE · UNN</span>
+  <span>52 WEEKS · 12 LANGUAGES · 42 ACTIVE WEEKS</span>
+  <span>MAR 2026 → MAR 2027</span>
+</div>
+
+<script>
+const WEEKS = [
+  // ══ PHASE 1 — FOUNDATION ══════════════════════════════════
+  { week:1, phase:1, active:true, diff:"Beginner", projects:[
+    {lang:"python",  name:"CLI Calculator",
+     desc:"A command-line calculator that handles arithmetic expressions entered as text. Covers input parsing, operator precedence, basic error handling, and the loop that keeps the program alive between calculations."},
+    {lang:"js",      name:"Analog/Digital Clock",
+     desc:"A live clock rendered in the browser that updates every second. The analog version uses trigonometry to position clock hands on a canvas or SVG; the digital version formats the Date object into a readable string."},
+    {lang:"nodejs",  name:"Hello World HTTP Server",
+     desc:"The most minimal Node.js web server — receives an HTTP request and responds with text. Explores how Node's event loop handles incoming connections without spawning a thread per request."},
+    {lang:"react",   name:"Counter App",
+     desc:"A simple increment/decrement counter that demonstrates how React state works, how components re-render when state changes, and how event handlers are wired to UI elements."},
+    {lang:"html",    name:"Personal Profile Page",
+     desc:"A static HTML page that presents a personal profile — photo, bio, skills, links. Focuses on semantic HTML structure, accessibility, and CSS box-model fundamentals."},
+  ]},
+  { week:2, phase:1, active:true, diff:"Beginner", projects:[
+    {lang:"python",  name:"To-Do List CLI",
+     desc:"A terminal to-do manager that lets you add, remove, complete, and list tasks. Persists data between sessions in a plain text or JSON file, introducing file I/O alongside list manipulation."},
+    {lang:"js",      name:"Color Picker Tool",
+     desc:"A browser-based color picker that lets the user select a hue, convert between hex/rgb/hsl, and preview it live. Covers DOM manipulation, input events, and color math."},
+    {lang:"nodejs",  name:"File Reader CLI",
+     desc:"A CLI tool that accepts a file path and prints its contents or stats to the terminal. Explores Node's fs module, process.argv, stream-based reading, and basic error handling for missing files."},
+    {lang:"react",   name:"To-Do App",
+     desc:"A full to-do application in React with add, delete, and complete functionality. Introduces list rendering with keys, controlled form inputs, and lifting state between sibling components."},
+    {lang:"html",    name:"Landing Page",
+     desc:"A polished marketing-style landing page with a hero section, feature list, and call-to-action. Focuses on CSS Flexbox for layout, typography hierarchy, and responsive breakpoints."},
+  ]},
+  { week:3, phase:1, active:true, diff:"Beginner", projects:[
+    {lang:"python",  name:"Contact Book App",
+     desc:"A contact manager where you can store, search, update, and delete contacts. Uses a dictionary or SQLite as the backing store and introduces CRUD operations at the most fundamental level."},
+    {lang:"js",      name:"Countdown Timer",
+     desc:"A configurable countdown timer that accepts a target duration, counts down in real time, and fires an alert or sound when it hits zero. Covers setInterval, Date arithmetic, and DOM updates on a tick."},
+    {lang:"nodejs",  name:"HTTP Server with Routing",
+     desc:"An HTTP server that returns different responses based on the URL path — e.g. /about vs /api/data. Introduces manual routing logic, status codes, and content-type headers before any framework is involved."},
+    {lang:"react",   name:"Weather Dashboard (API)",
+     desc:"A dashboard that fetches live weather data from a public API and displays temperature, conditions, and a forecast. Covers useEffect for side effects, async/await inside components, and conditional rendering."},
+    {lang:"html",    name:"Pricing Table Component",
+     desc:"A classic three-tier pricing table with a highlighted 'recommended' plan. Focuses on CSS Grid for equal-height columns, visual hierarchy, and hover states with smooth transitions."},
+  ]},
+  { week:4, phase:1, active:false, break:true, label:"REST WEEK", sub:"Take a full break — review your Week 1–3 projects, refactor anything messy." },
+  { week:5, phase:1, active:true, diff:"Beginner", projects:[
+    {lang:"python",  name:"Weather App (OpenWeather API)",
+     desc:"A Python script that queries the OpenWeatherMap API and prints a clean weather summary for any city. Introduces HTTP requests with the requests library, JSON parsing, and handling API keys safely via environment variables."},
+    {lang:"js",      name:"Random Quote Generator",
+     desc:"An app that fetches or picks a random quote and displays it with a smooth transition. Covers fetch API, array randomization, DOM updates, and optionally a 'copy to clipboard' feature using the Clipboard API."},
+    {lang:"nodejs",  name:"JSON REST API (No DB)",
+     desc:"A REST API with full CRUD operations backed by an in-memory array instead of a database. Clarifies what REST really means — resource naming, HTTP verbs, status codes — without the complexity of persistence."},
+    {lang:"react",   name:"Pomodoro Timer",
+     desc:"A focus timer that cycles between work intervals and short breaks, with session tracking. Introduces useReducer for more complex state machines and useRef for managing the setInterval lifecycle."},
+    {lang:"html",    name:"CSS Navigation Menu (Animated)",
+     desc:"A responsive navigation bar with smooth dropdown menus, a hamburger toggle for mobile, and animated hover states. Uses only CSS transitions and transforms — no JavaScript — to demonstrate what pure CSS can do."},
+  ]},
+  { week:6, phase:1, active:true, diff:"Beginner", projects:[
+    {lang:"python",  name:"File Organizer Script",
+     desc:"A script that scans a folder and moves files into sub-folders by extension (images, documents, videos, etc.). Covers os and shutil for path operations and batch file manipulation."},
+    {lang:"js",      name:"Tip Calculator",
+     desc:"A bill-splitting and tip calculator with live updates as the user types. Covers form input events, floating-point arithmetic, and formatting currency output."},
+    {lang:"nodejs",  name:"Express.js Setup + MVC Structure",
+     desc:"A Node.js project scaffolded with Express and organized into Models, Views, and Controllers. Demonstrates why separation of concerns matters even in small apps and how Express middleware works."},
+    {lang:"react",   name:"Movie Search App (API)",
+     desc:"A search interface for browsing movies using the OMDB or TMDB API. Covers debounced search inputs, pagination, loading/error states, and displaying external image assets."},
+    {lang:"html",    name:"Card Component Library",
+     desc:"A set of reusable card components — profile card, product card, blog post card — built in pure HTML and CSS. Focuses on CSS custom properties to keep the design consistent across variants."},
+  ]},
+  { week:7, phase:1, active:true, diff:"Beginner", projects:[
+    {lang:"python",  name:"Password Generator & Strength Meter",
+     desc:"A tool that generates secure random passwords based on user-defined criteria (length, symbols, digits) and rates the strength of any given password. Covers the secrets and string modules and basic entropy scoring."},
+    {lang:"js",      name:"BMI Calculator",
+     desc:"A body mass index calculator that supports both metric and imperial units and categorizes the result. Focuses on form handling, unit conversion math, and conditionally rendering different result messages."},
+    {lang:"nodejs",  name:"User Authentication (JWT + bcrypt)",
+     desc:"A complete auth system with register, login, and protected route endpoints. Passwords are hashed before storage and JWTs are issued on login — covering the security fundamentals underpinning most real web apps."},
+    {lang:"react",   name:"Shopping Cart",
+     desc:"A product listing page with an add-to-cart system, quantity controls, and a running total. Introduces the concept of derived state — the cart total is computed from the cart array rather than stored separately."},
+    {lang:"html",    name:"CSS Animated Loader Collection",
+     desc:"A showcase of 8–10 different CSS-only loading spinners and progress indicators. A deep dive into @keyframes, animation-timing-function, and transforms to understand what CSS animations are truly capable of."},
+  ]},
+  { week:8, phase:1, active:false, break:true, label:"REST WEEK", sub:"Revisit your Node.js and React projects. Write README docs for each." },
+  { week:9, phase:1, active:true, diff:"Beginner→Intermediate", projects:[
+    {lang:"python",  name:"Quiz Game CLI",
+     desc:"A multiple-choice quiz game that loads questions from a JSON file, tracks score across rounds, and shows a summary at the end. Introduces data-driven UI and the separation between game logic and presentation."},
+    {lang:"js",      name:"Accordion FAQ Component",
+     desc:"An FAQ section where only one answer is visible at a time, with smooth expand/collapse animations. Covers event delegation, toggling CSS classes, and managing exclusive open/closed state across a group."},
+    {lang:"nodejs",  name:"File Upload Server (Multer)",
+     desc:"An Express server that accepts file uploads, stores them on disk, and returns metadata about the saved file. Covers multipart form data, MIME type validation, file size limits, and serving uploaded files back to the client."},
+    {lang:"react",   name:"Blog App with CRUD",
+     desc:"A blog where posts can be created, read, edited, and deleted. Introduces React Router for navigating between a list view and a detail/edit view, plus a shared state strategy for the post collection."},
+    {lang:"html",    name:"Blog Layout (CSS Grid)",
+     desc:"A multi-column editorial blog layout with a featured post, sidebar, and article grid. A practical exercise in CSS Grid template areas, responsive column collapsing, and typographic rhythm."},
+  ]},
+  { week:10, phase:1, active:true, diff:"Beginner→Intermediate", projects:[
+    {lang:"python",  name:"Unit Converter (10+ types)",
+     desc:"A converter supporting length, weight, temperature, speed, area, volume, and more. Explores dictionary-driven conversion tables, recursive factor chains, and how to build extensible tools without hard-coding every formula."},
+    {lang:"js",      name:"Image Carousel (no library)",
+     desc:"A responsive image slideshow built entirely from scratch — auto-advance, manual navigation dots, and keyboard support. Covers managing an active index, CSS transitions between slides, and touch/swipe detection."},
+    {lang:"nodejs",  name:"Email Notification Service (Nodemailer)",
+     desc:"A service that sends formatted HTML emails triggered by events (e.g. a form submission). Covers SMTP configuration, email templates, handling delivery errors, and separating email logic into a reusable service module."},
+    {lang:"react",   name:"Auth Flow — Login/Register/Logout",
+     desc:"A complete authentication UI with login and registration forms, route protection, and persistent session via localStorage. Introduces React Context for making auth state available across the component tree."},
+    {lang:"html",    name:"Portfolio Page",
+     desc:"A personal developer portfolio with a hero, skills section, project showcase, and contact form. Focuses on CSS scroll-reveal effects, sticky navigation, and mobile-first layout design."},
+  ]},
+  { week:11, phase:1, active:true, diff:"Beginner→Intermediate", projects:[
+    {lang:"python",  name:"Budget Tracker CLI (with CSV export)",
+     desc:"A budget tracker where you log income and expenses by category, then view summaries and export reports to CSV. Introduces the csv module, category grouping, and simple running-balance calculations."},
+    {lang:"js",      name:"Drag and Drop List",
+     desc:"A reorderable list using the HTML5 Drag and Drop API. Covers dragstart, dragover, drop, and dragleave events, visual feedback during drag, and updating the underlying data array when items are reordered."},
+    {lang:"nodejs",  name:"REST API + MongoDB (Mongoose)",
+     desc:"A full CRUD REST API backed by a real MongoDB database using Mongoose for schemas and models. Introduces document-oriented data modeling, schema validation, and async database operations via Promises."},
+    {lang:"react",   name:"Dashboard with Charts (Recharts)",
+     desc:"An analytics-style dashboard displaying data in bar charts, line charts, and pie charts using the Recharts library. Focuses on data transformation into chart-ready formats and responsive chart layouts."},
+    {lang:"html",    name:"Testimonial Slider (CSS-only)",
+     desc:"A customer testimonial carousel that advances automatically using only CSS animations and the :checked hack or scroll-snap. Demonstrates what CSS can achieve without a single line of JavaScript."},
+  ]},
+  { week:12, phase:1, active:true, diff:"Intermediate", projects:[
+    {lang:"python",  name:"Markdown Notes App (curses)",
+     desc:"A terminal-based notes editor with a full-screen TUI built on the curses library. You write in Markdown, and the app renders a live plain-text preview below. Introduces terminal I/O, window management, and keyboard event loops."},
+    {lang:"js",      name:"Infinite Scroll Feed",
+     desc:"A social-feed-style page that loads new content as the user scrolls toward the bottom, using the IntersectionObserver API. Covers lazy loading patterns, simulating paginated API responses, and avoiding scroll-event performance pitfalls."},
+    {lang:"nodejs",  name:"Rate Limiter Middleware",
+     desc:"Express middleware that tracks how many requests each IP makes per time window and blocks requests that exceed the limit. Covers sliding-window vs fixed-window algorithms, using an in-memory store, and returning proper 429 responses."},
+    {lang:"react",   name:"Kanban Board (drag-and-drop)",
+     desc:"A Trello-like task board with multiple columns (To Do, In Progress, Done) where cards can be dragged between columns. Covers complex nested state updates, drag-and-drop libraries, and optimistic UI updates."},
+    {lang:"html",    name:"Responsive CSS Grid System",
+     desc:"A hand-crafted 12-column grid system using CSS Grid and custom properties — similar to Bootstrap's grid but written from scratch. Teaches how popular frameworks achieve responsiveness at the lowest level."},
+  ]},
+
+  // ══ TRANSITION — FLUTTER & RUST ══════════════════════════
+  { week:13, phase:2, active:false, transition:true,
+    label:"🦋  TRANSITION — Flutter & Rust Introduced",
+    sub:"Set up Flutter SDK and Rust toolchain (rustup). Read 'The Book' Chapter 1–4. Run a Flutter 'Hello World'. Rest and prepare." },
+
+  // ══ PHASE 2 — INTERMEDIATE ════════════════════════════════
+  { week:14, phase:2, active:true, diff:"Intermediate (Flutter: Beginner)", projects:[
+    {lang:"python",  name:"Web Scraper (BeautifulSoup + requests)",
+     desc:"A scraper that fetches a web page, parses its HTML structure, and extracts specific data — headlines, prices, links — into a clean format. Covers CSS selector navigation, handling pagination, and respecting robots.txt."},
+    {lang:"js",      name:"Canvas Drawing App",
+     desc:"A freehand drawing application on an HTML5 Canvas with brush size, color picker, eraser, and clear/save actions. Covers mouse and touch events, canvas context methods, and exporting the canvas as an image."},
+    {lang:"nodejs",  name:"WebSocket Server (ws library)",
+     desc:"A real-time server that maintains persistent connections with multiple clients and broadcasts messages to all of them simultaneously. Lays the foundation for anything real-time — chat, live feeds, collaborative tools."},
+    {lang:"react",   name:"E-commerce Product Page",
+     desc:"A detailed product page with image gallery, size/color selectors, quantity input, reviews section, and an add-to-cart action. Focuses on component decomposition and prop drilling vs context for cart state."},
+    {lang:"html",    name:"Image Hover Effects Showcase",
+     desc:"A grid of cards where each card reveals overlaid text, icons, or color transitions when hovered. An exploration of CSS pseudo-elements, overflow:hidden, and transform-based reveals without JavaScript."},
+    {lang:"flutter", name:"Hello World + Widget Tree Explorer",
+     desc:"Your first Flutter app — a screen that renders text, a button, and a simple column layout. The real focus is understanding Flutter's widget tree, the difference between stateless and stateful widgets, and how the build method works."},
+    {lang:"rust",    name:"Hello World + Ownership Demo",
+     desc:"A Rust program that prints text and deliberately explores ownership, borrowing, and lifetimes through small examples. The goal is to feel the borrow checker in action — understanding what it's protecting you from before fighting it."},
+  ]},
+  { week:15, phase:2, active:true, diff:"Intermediate (Flutter: Beginner)", projects:[
+    {lang:"python",  name:"CSV Data Analyzer (pandas)",
+     desc:"A script that loads a CSV file, performs grouping, aggregation, and filtering using pandas DataFrames, and outputs summary statistics. Covers the pandas API, chained operations, and how vectorized operations differ from Python loops."},
+    {lang:"js",      name:"Browser JS Piano (AudioContext)",
+     desc:"A playable piano keyboard in the browser where each key produces a real synthesized tone using the Web Audio API. Covers oscillators, gain nodes, attack/release envelopes, and keyboard event mapping to notes."},
+    {lang:"nodejs",  name:"CLI Task Manager (commander.js)",
+     desc:"A fully featured command-line task manager installable as a global npm package. Covers commander.js for parsing subcommands and flags, persisting data in a JSON file, and structuring a CLI with multiple commands."},
+    {lang:"react",   name:"Real-time Chat UI",
+     desc:"A chat interface that connects to your Week 14 WebSocket server and supports multiple users, message timestamps, and online indicators. Covers useEffect cleanup for WebSocket connections and optimistic message rendering."},
+    {lang:"html",    name:"CSS Animation Showcase",
+     desc:"A curated collection of 10+ CSS animations — morphing shapes, text reveals, glitch effects, bouncing physics. Each animation is self-contained and annotated, building a personal reference library of animation techniques."},
+    {lang:"flutter", name:"Simple Counter App",
+     desc:"A counter with increment, decrement, and reset — Flutter's canonical 'hello state' example. The point is not the counter itself but fully understanding setState, why it triggers a rebuild, and the widget lifecycle."},
+    {lang:"rust",    name:"CLI Calculator",
+     desc:"A command-line calculator that reads an expression from arguments or stdin and prints the result. Covers Rust's match expressions, parsing strings into numbers, error propagation with Result, and basic pattern matching."},
+  ]},
+  { week:16, phase:2, active:true, diff:"Intermediate (Flutter: Beginner)", projects:[
+    {lang:"python",  name:"Image Resizer (Pillow)",
+     desc:"A script that batch-processes a folder of images — resizing, cropping, converting formats, and adding watermarks — using the Pillow library. Covers image modes, pixel operations, and processing pipelines."},
+    {lang:"js",      name:"Memory Card Game",
+     desc:"A classic flip-and-match memory game with a card grid, match detection, move counter, and timer. Covers shuffling arrays, managing 'flipped' and 'matched' state per card, and preventing rapid double-flips."},
+    {lang:"nodejs",  name:"Image Processing API (Sharp)",
+     desc:"An API endpoint that accepts an uploaded image and returns a processed version — resized, cropped, converted, or watermarked — using the Sharp library. Covers streaming image transformations and returning binary data from Express."},
+    {lang:"react",   name:"Multi-Step Form with Validation",
+     desc:"A registration wizard that spans multiple screens, validates each step before advancing, and shows a progress indicator. Covers form state management, field-level and step-level validation, and assembling the final submission payload."},
+    {lang:"html",    name:"Dark Mode Toggle (CSS Variables Only)",
+     desc:"A full page theme switch between light and dark modes using only CSS custom property overrides and a checkbox toggle — no JavaScript. Demonstrates how CSS variables create a theming layer that can be swapped at the :root level."},
+    {lang:"flutter", name:"BMI Calculator App",
+     desc:"A mobile BMI calculator with sliders for height and weight, a results screen with a health category indicator, and unit toggling. Focuses on Flutter's input widgets, navigation between screens using Navigator, and basic theming."},
+    {lang:"rust",    name:"Number Guessing Game",
+     desc:"The classic guessing game from The Rust Book — the program picks a random number and the user guesses until they get it, with high/low hints. The real lesson is Rust's standard I/O, random number generation via the rand crate, and loop control flow."},
+  ]},
+  { week:17, phase:2, active:false, break:true, label:"REST WEEK", sub:"Review Flutter widget concepts and Rust ownership/borrowing. Read docs." },
+  { week:18, phase:2, active:true, diff:"Intermediate", projects:[
+    {lang:"python",  name:"URL Shortener (Flask)",
+     desc:"A web app where you submit a long URL and receive a short code that redirects to the original. Covers Flask routing, SQLite for storing the URL map, redirect responses, and generating collision-free short codes."},
+    {lang:"js",      name:"Typing Speed Test",
+     desc:"A typing test that presents a passage, measures words per minute and accuracy in real time, and shows a results summary. Covers keystroke-level event handling, character-by-character comparison, and computing WPM from elapsed time."},
+    {lang:"nodejs",  name:"PDF Generation Service (PDFKit)",
+     desc:"A service that accepts structured data — an invoice, a report, a certificate — and generates a downloadable PDF. Covers PDFKit's document model, placing text and images programmatically, and streaming the output to the client."},
+    {lang:"react",   name:"Infinite Scroll Feed (Intersection Observer)",
+     desc:"A news-feed-style page that appends new items as the user reaches the bottom, using IntersectionObserver inside a React hook. Covers custom hooks, accumulating paginated data without flicker, and a sentinel element pattern."},
+    {lang:"html",    name:"Magazine Layout (CSS Grid)",
+     desc:"A richly designed editorial layout with spanning cells, pull-quotes, and a multi-column article body — the kind of layout that would be nearly impossible with Flexbox alone. A deep exploration of grid-template-areas and named lines."},
+    {lang:"flutter", name:"To-Do List App",
+     desc:"A to-do app with add, delete, and complete actions, stored in SharedPreferences so tasks survive app restarts. Introduces ListView.builder for rendering dynamic lists, Dismissible for swipe-to-delete, and local persistence."},
+    {lang:"rust",    name:"Fibonacci (Iterative + Recursive + Memoized)",
+     desc:"Three implementations of the Fibonacci sequence — iterative, recursive, and memoized with a HashMap — with timing comparisons. An entry point into Rust's performance characteristics, the borrow checker in recursive contexts, and the HashMap API."},
+  ]},
+  { week:19, phase:2, active:true, diff:"Intermediate", projects:[
+    {lang:"python",  name:"REST API (Flask + SQLAlchemy)",
+     desc:"A production-structure REST API with database models, migrations, serialization, and error handling. SQLAlchemy ORM sits between the API layer and the database, introducing the concept of model relationships and query building."},
+    {lang:"js",      name:"Weather Widget (API + localStorage cache)",
+     desc:"A weather widget that caches the last fetched result in localStorage so it loads instantly on repeat visits, only re-fetching when the cache is stale. Covers cache invalidation strategy and the stale-while-revalidate pattern."},
+    {lang:"nodejs",  name:"OAuth Integration (Google/GitHub)",
+     desc:"A login system that uses OAuth 2.0 to authenticate users via Google or GitHub, then creates or fetches a local user record. Covers the authorization code flow, token exchange, and Passport.js strategy configuration."},
+    {lang:"react",   name:"Dark/Light Mode Toggle (Context API)",
+     desc:"A theme toggle that persists the user's preference in localStorage and applies it on load. Introduces React Context properly — creating a provider, a consumer hook, and the pattern of keeping global UI state out of individual components."},
+    {lang:"html",    name:"CSS Dashboard Layout",
+     desc:"A full admin dashboard layout — sidebar navigation, header, stats cards, and a main content area — built in pure HTML and CSS. Focuses on sticky sidebar patterns, overflow handling on the main area, and responsive collapse behavior."},
+    {lang:"flutter", name:"Notes App (SharedPreferences)",
+     desc:"A simple note-taking app where notes are saved locally and survive app restarts. Introduces CRUD within Flutter's local persistence layer and the pattern of loading data asynchronously in initState."},
+    {lang:"rust",    name:"File Reader CLI (std::fs)",
+     desc:"A command-line tool that reads a file, counts words/lines/characters, and prints a summary — like a basic wc command. Covers Rust's std::fs and std::io APIs, BufReader for efficient line-by-line reading, and path handling."},
+  ]},
+  { week:20, phase:2, active:true, diff:"Intermediate", projects:[
+    {lang:"python",  name:"Chat CLI (Python Sockets)",
+     desc:"A terminal-based LAN chat system where a server relays messages between multiple connected clients using raw TCP sockets and threading. Covers socket programming fundamentals, thread-per-client architecture, and message broadcasting."},
+    {lang:"js",      name:"Budget Tracker UI (localStorage)",
+     desc:"A personal finance tracker with income/expense logging, category breakdowns, monthly filtering, and a balance overview — all persisted in localStorage. Covers complex state derived from a transaction array rather than stored redundantly."},
+    {lang:"nodejs",  name:"GraphQL API (Apollo)",
+     desc:"A GraphQL API replacing the traditional REST approach — schema definition, resolvers, queries, and mutations. Demonstrates why GraphQL solves over-fetching and under-fetching problems that REST APIs suffer at scale."},
+    {lang:"react",   name:"Markdown Editor (live preview)",
+     desc:"A split-pane editor where you type raw Markdown on the left and see a rendered HTML preview on the right, updated in real time. Covers controlled textarea components, a Markdown parsing library, and preventing XSS from rendered HTML."},
+    {lang:"html",    name:"Product Page (CSS)",
+     desc:"A rich e-commerce product detail page — sticky image gallery, expandable specs accordion, and an 'add to cart' section — built in HTML and CSS. Focuses on position:sticky behavior and CSS transitions on accordion panels."},
+    {lang:"flutter", name:"Quiz App (JSON-driven)",
+     desc:"A multi-screen quiz app where questions are loaded from a local JSON asset. Covers asset loading at runtime, multi-screen navigation with data passed between routes, and an animated result summary screen."},
+    {lang:"rust",    name:"CLI Args Parser (clap crate)",
+     desc:"A CLI tool that uses the clap crate for rich argument parsing — subcommands, flags, default values, and auto-generated help text. Explores Rust's ecosystem of derive macros and how procedural macros generate code at compile time."},
+  ]},
+  { week:21, phase:2, active:true, diff:"Intermediate", projects:[
+    {lang:"python",  name:"Task Manager with SQLite",
+     desc:"A task management app backed by SQLite with projects, tasks, due dates, and priorities. Covers raw SQL via the sqlite3 module, schema design decisions, and transactional operations for data integrity."},
+    {lang:"js",      name:"Debounce / Throttle Demo Tool",
+     desc:"An interactive demo that visually shows the difference between debounced and throttled event handlers — a concept essential to high-performance UIs. The tool lets you adjust delay values and see how they affect event firing in real time."},
+    {lang:"nodejs",  name:"Microservice — User Service",
+     desc:"A standalone User microservice responsible for user creation, retrieval, and authentication — designed to be called by other services over HTTP. Introduces service boundaries, internal vs external API design, and health-check endpoints."},
+    {lang:"react",   name:"Code Snippet Manager (syntax highlight)",
+     desc:"A personal code snippet library where you save snippets by language and tag, with syntax highlighting via Prism.js or highlight.js. Covers search/filter logic, copy-to-clipboard, and managing a collection of rich text items."},
+    {lang:"html",    name:"CSS Art Piece (pure CSS illustration)",
+     desc:"A hand-crafted illustration — a landscape, an object, a character — built entirely from CSS shapes, gradients, and pseudo-elements, no images. A creative challenge that builds deep intuition for CSS positioning and layering."},
+    {lang:"flutter", name:"Weather App (UI + fake data)",
+     desc:"A polished weather app UI with a current conditions screen, hourly forecast scroll, and a weekly outlook — using hardcoded data rather than a live API. The focus is on Flutter layout, custom widgets, and making the UI look production-quality."},
+    {lang:"rust",    name:"Struct & Enum System Demo",
+     desc:"A program that models a real-world domain — e.g. a shape system, a card game, or a message protocol — using Rust structs, enums, and impl blocks. Covers method implementations, associated functions, and pattern matching on complex enums."},
+  ]},
+  { week:22, phase:2, active:true, diff:"Intermediate", projects:[
+    {lang:"python",  name:"Automated Email Sender (smtplib)",
+     desc:"A script that reads a list of recipients and a template, fills in personalized fields, and sends each email via SMTP. Covers MIME message construction, SMTP authentication, error handling per recipient, and rate limiting to avoid spam flags."},
+    {lang:"js",      name:"Virtual Keyboard (on-screen)",
+     desc:"An on-screen keyboard that types into a focused text input, supports shift/caps for uppercase, and has a backspace. Covers virtual input injection, CSS grid layout for the key rows, and the subtle complexity of cursor position management."},
+    {lang:"nodejs",  name:"Message Queue (BullMQ + Redis)",
+     desc:"A job queue system where tasks like email sending or image processing are added to a queue and processed by worker processes. Introduces producer/consumer architecture, job retries, priority queues, and why queues make systems resilient."},
+    {lang:"react",   name:"GitHub Profile Viewer",
+     desc:"An app where you search a GitHub username and see their profile, repos sorted by stars, and contribution language breakdown. Covers complex async data fetching, handling rate limits with feedback, and composing multiple API calls."},
+    {lang:"html",    name:"CSS 3D Transforms Showcase",
+     desc:"A demo of CSS 3D transforms — rotating cubes, flip cards, perspective-driven nav menus, and a 3D card stack. Explores perspective, transform-style: preserve-3d, and backface-visibility to create genuine depth in the browser."},
+    {lang:"flutter", name:"Shopping List App",
+     desc:"A grocery shopping list with categories, item quantity tracking, a 'checked off' state, and a summary of remaining items. Introduces more complex list state — items have multiple fields — and demonstrates organizing state into data model classes."},
+    {lang:"rust",    name:"Error Handling & Result Chains Demo",
+     desc:"A program that chains multiple fallible operations — file reading, parsing, network requests — using the ? operator and custom error types with thiserror. Demonstrates idiomatic Rust error propagation and why it avoids null-pointer class bugs."},
+  ]},
+  { week:23, phase:2, active:false, break:true, label:"REST WEEK", sub:"Consolidate Flask and GraphQL projects. Start Rust Chapter 6–9 (enums, pattern matching, modules)." },
+  { week:24, phase:2, active:true, diff:"Intermediate", projects:[
+    {lang:"python",  name:"PDF Generator (ReportLab)",
+     desc:"A tool that generates formatted PDF documents — invoices, reports, certificates — with tables, charts, and styled text using ReportLab. Covers the PLATYPUS document model, flowables, and programmatic layout control."},
+    {lang:"js",      name:"Custom HTML5 Video Player",
+     desc:"A fully custom video player UI replacing the browser's default controls — play/pause, volume, seek bar, fullscreen, and playback speed. Covers the HTMLVideoElement API, progress event handling, and building accessible custom controls."},
+    {lang:"nodejs",  name:"Redis Caching Layer",
+     desc:"A caching middleware that wraps expensive API or database calls and stores results in Redis with a TTL. Explores cache-aside vs write-through strategies, cache invalidation, and measuring cache hit rates."},
+    {lang:"react",   name:"Music Player UI",
+     desc:"A music player interface with a playlist, progress bar, play/pause/skip controls, and album art. Covers managing audio with the HTMLAudioElement via a ref, syncing playback state with React, and the timeupdate event loop."},
+    {lang:"html",    name:"Parallax Scroll Effect",
+     desc:"A landing page where background layers move at different speeds during scroll, creating a depth illusion. Covers the scroll event and CSS transform approaches, plus an introduction to CSS custom property tricks for parallax without JavaScript."},
+    {lang:"flutter", name:"Chat UI App (Bubble Design)",
+     desc:"A polished chat interface with message bubbles, timestamps, sent/delivered indicators, and a sticky input bar. Focus is on Flutter's layout for chat-style UIs — reversed ListView, floating input, and differentiating 'sent' vs 'received' messages visually."},
+    {lang:"rust",    name:"To-Do CLI (file persistence, serde_json)",
+     desc:"A persistent CLI to-do manager that serializes task state to a JSON file using serde. Covers serde's derive macros, reading and writing structured data to disk, and building a clean command interface with clap."},
+  ]},
+  { week:25, phase:2, active:true, diff:"Intermediate", projects:[
+    {lang:"python",  name:"Web Crawler (link graph mapper)",
+     desc:"A crawler that starts at a seed URL, follows all internal links, and maps the site's link graph. Covers BFS/DFS traversal, handling relative vs absolute URLs, rate limiting to be polite, and cycle detection to avoid infinite loops."},
+    {lang:"js",      name:"Real-Time Search Filter (Fuse.js)",
+     desc:"A search interface with fuzzy matching — results appear and narrow as you type, tolerating typos. Covers Fuse.js configuration, scoring relevance, highlighting matched substrings, and keeping search fast on large datasets."},
+    {lang:"nodejs",  name:"Event-Driven Architecture Demo",
+     desc:"A mini application structured around Node's EventEmitter — modules communicate by emitting and listening to events rather than calling each other directly. Demonstrates loose coupling and why event-driven patterns suit I/O-heavy systems."},
+    {lang:"react",   name:"Note-Taking App (rich text)",
+     desc:"A notes app with a rich text editor supporting bold, italic, headings, and lists. Introduces the complexity of rich text state management — why plain string state breaks down and what libraries like Tiptap or Slate solve."},
+    {lang:"html",    name:"Variable Fonts Demo",
+     desc:"An interactive showcase of a variable font's axes — weight, width, slant, optical size — with live sliders. Explores the font-variation-settings CSS property and demonstrates how a single font file can replace an entire family."},
+    {lang:"flutter", name:"Music Player UI (audio_players)",
+     desc:"A full music player with playlist management, a waveform-style progress bar, and background audio support using the audio_players package. Covers long-running audio sessions, notification controls, and keeping Flutter's UI in sync with playback state."},
+    {lang:"rust",    name:"Web Scraper (reqwest + scraper)",
+     desc:"A Rust web scraper that fetches a page asynchronously and extracts structured data using CSS selectors. Covers async/await with tokio, the reqwest HTTP client, and the scraper crate's HTML parsing model."},
+  ]},
+  { week:26, phase:2, active:true, diff:"Intermediate", projects:[
+    {lang:"python",  name:"Log Parser & Report Generator",
+     desc:"A tool that reads server or application log files, parses them with regex, aggregates error counts and response times by endpoint, and generates an HTML or CSV report. Covers the re module, generator-based file reading, and data aggregation patterns."},
+    {lang:"js",      name:"Markdown Previewer",
+     desc:"A standalone Markdown-to-HTML converter that renders a preview in real time as you type, with syntax highlighting for code blocks and support for GitHub Flavored Markdown extensions like task lists and tables."},
+    {lang:"nodejs",  name:"Real-Time Notifications (SSE)",
+     desc:"A notification system where the server pushes events to all connected clients using Server-Sent Events — a simpler alternative to WebSockets for one-way streams. Covers EventSource on the client, keep-alive connections, and reconnection handling."},
+    {lang:"react",   name:"Job Board App",
+     desc:"A job listings board with filters by role, location, and tech stack, a saved jobs feature, and a detail view. Introduces URL-synced filter state using query parameters so filtered views are shareable as links."},
+    {lang:"html",    name:"CSS Custom Properties Design System",
+     desc:"A complete design token system in CSS — typography scale, spacing scale, color palette, and shadow levels — all defined as custom properties and consumed by component classes. Demonstrates how large teams maintain visual consistency without a framework."},
+    {lang:"flutter", name:"E-commerce Product Listing App",
+     desc:"A multi-screen shopping app with a product grid, category filters, product detail page, and a cart. Focuses on passing data deeply through a widget tree using InheritedWidget or Provider, and clean navigation between screens."},
+    {lang:"rust",    name:"REST API Client (reqwest + async)",
+     desc:"A Rust program that consumes a public REST API — fetching, deserializing, and displaying data — using reqwest and serde. Covers async main with tokio, error handling across the network and parsing layers, and typed deserialization."},
+  ]},
+  { week:27, phase:2, active:true, diff:"Intermediate", projects:[
+    {lang:"python",  name:"Port Scanner (socket + threading)",
+     desc:"A tool that scans a host for open TCP ports across a configurable range, using threads for parallel connections. Covers raw socket programming, connection timeouts, threading, and the ethical/legal context of network scanning tools."},
+    {lang:"js",      name:"Regex Tester Tool",
+     desc:"An interactive regex playground where you type a pattern and test string and see matches highlighted in real time, with capture group output and flag toggles. A practical tool that also teaches regex flags, groups, and lookaheads."},
+    {lang:"nodejs",  name:"API Gateway (http-proxy-middleware)",
+     desc:"A lightweight API gateway that routes incoming requests to different backend microservices based on the URL path, with request/response transformation and basic authentication forwarding. Introduces the gateway pattern in microservice architectures."},
+    {lang:"react",   name:"Recipe App",
+     desc:"A recipe browser with search, category filters, ingredient lists, and step-by-step instructions. Covers normalizing API response data into a clean local shape and building compound filter logic across multiple active filters simultaneously."},
+    {lang:"html",    name:"Complex Form Design (CSS)",
+     desc:"A multi-field form — application, checkout, survey — with custom-styled select menus, radio buttons, checkboxes, file uploads, and real-time validation styling using CSS :valid, :invalid, and :focus-within pseudo-classes."},
+    {lang:"flutter", name:"Recipe App (local JSON data)",
+     desc:"A recipe app that loads structured JSON from Flutter's assets at startup. Covers decoding JSON into typed Dart model classes, building a searchable list, and a detail screen with an ingredient checklist."},
+    {lang:"rust",    name:"Markdown Parser (pulldown-cmark)",
+     desc:"A Markdown processing tool using the pulldown-cmark crate — parsing Markdown into an event stream and transforming it into custom output. Demonstrates Rust's iterator-based processing model and how crates expose streaming APIs."},
+  ]},
+  { week:28, phase:2, active:true, diff:"Intermediate", projects:[
+    {lang:"python",  name:"Encryption Tool (AES via cryptography)",
+     desc:"A tool that encrypts and decrypts files or text using AES-256 via the cryptography library. Covers symmetric encryption concepts, key derivation from passwords, IV/nonce management, and authenticated encryption modes."},
+    {lang:"js",      name:"JSON Formatter / Validator Tool",
+     desc:"A browser-based tool that accepts a raw JSON string, validates it, pretty-prints it with syntax highlighting, and reports any parsing errors with line/column information. Covers try/catch around JSON.parse and building a recursive syntax tree coloring renderer."},
+    {lang:"nodejs",  name:"Stripe Payment Integration",
+     desc:"An Express app with product listings, a Stripe Checkout session, and a webhook handler that confirms payment and fulfills orders. Covers the Stripe Node.js SDK, idempotent webhook processing, and the importance of server-side payment verification."},
+    {lang:"react",   name:"Calendar App (custom logic)",
+     desc:"A monthly calendar view built without any calendar library — all date math is done manually. Covers JavaScript's Date object, computing the first day of a month, rendering a 7-column grid, and navigating between months."},
+    {lang:"html",    name:"SVG Animation",
+     desc:"An animated SVG illustration — a character, a chart, a data flow diagram — using SMIL animation attributes and CSS keyframes on SVG elements. Explores SVG paths, stroke-dasharray animation, and morphing shapes."},
+    {lang:"flutter", name:"Expense Tracker (charts_flutter)",
+     desc:"An expense tracker that visualizes spending by category over time using bar and pie charts from the fl_chart package. Covers aggregating transaction data into chart-ready models and Flutter's animation system for smooth chart transitions."},
+    {lang:"rust",    name:"JSON Serializer / Deserializer (serde)",
+     desc:"A deep dive into serde — the cornerstone of Rust's data serialization ecosystem. The project serializes a complex nested data structure to JSON, TOML, and a binary format, exploring serde attributes, custom serializers, and derive macro limitations."},
+  ]},
+  { week:29, phase:2, active:false, break:true, label:"REST WEEK", sub:"Polish any incomplete projects. Read up on concurrency in Rust (Chapter 16)." },
+  { week:30, phase:2, active:true, diff:"Intermediate→Advanced", projects:[
+    {lang:"python",  name:"Image Classifier (scikit-learn + joblib)",
+     desc:"A machine learning pipeline that trains a classical image classifier (e.g. SVM or random forest on HOG features) and saves the model with joblib for inference. Covers feature extraction, train/test splits, accuracy evaluation, and the ML workflow."},
+    {lang:"js",      name:"Code Editor Widget (CodeMirror integration)",
+     desc:"An embeddable code editor component with syntax highlighting, line numbers, bracket matching, and a theme switcher using CodeMirror 6. Covers integrating complex third-party libraries, EditorView configuration, and building wrappers around imperative APIs."},
+    {lang:"nodejs",  name:"Multi-Tenant API (scoped DB)",
+     desc:"An API where each organization's data is fully isolated — either by separate databases or schema namespacing. Covers tenant resolution middleware, dynamic connection pooling per tenant, and the data isolation trade-offs in SaaS systems."},
+    {lang:"react",   name:"Data Table with Filters & Sort",
+     desc:"A data table component with client-side column sorting, multi-key search filtering, row selection, and pagination — built from scratch without a table library. A thorough exercise in deriving display state from raw data."},
+    {lang:"html",    name:"CSS Grid Game Board (Chess / Checkers)",
+     desc:"A functional chess or checkers board layout in pure HTML and CSS — pieces styled with CSS, valid-move highlighting via :has() or JS class toggling. Explores CSS Grid for uniform game grids and CSS counter-based labeling of ranks and files."},
+    {lang:"flutter", name:"Fitness Tracker (steps + goals)",
+     desc:"A fitness tracking app with daily step goals, streak tracking, a progress ring, and a weekly history chart. Introduces pedometer sensor access on mobile, local notifications for goal reminders, and animating SVG-style ring progress indicators."},
+    {lang:"rust",    name:"Multi-Threaded File Downloader",
+     desc:"A CLI tool that downloads a large file by splitting it into chunks and downloading each chunk on a separate thread, then reassembles them. Covers Rust threads, Arc/Mutex for shared progress state, and the HTTP Range request header."},
+  ]},
+  { week:31, phase:2, active:true, diff:"Intermediate→Advanced", projects:[
+    {lang:"python",  name:"Sentiment Analyzer (NLTK / TextBlob)",
+     desc:"A tool that classifies the sentiment of text — positive, negative, neutral — using NLTK's VADER or TextBlob's pattern analyzer. Covers NLP preprocessing (tokenization, stopword removal), sentiment polarity scores, and batch-processing a dataset."},
+    {lang:"js",      name:"Pixel Art Creator (Canvas)",
+     desc:"A pixel art editor with a configurable grid, color palette, fill and erase tools, undo/redo, and PNG export. Covers 2D canvas operations at the pixel level, implementing an undo stack with an array of state snapshots, and efficient canvas redraws."},
+    {lang:"nodejs",  name:"Structured Logging Service (Pino)",
+     desc:"A logging infrastructure using Pino for structured JSON logs, with log levels, request correlation IDs, and a log transport that routes logs to different destinations. Covers why structured logs are preferable to plain-text strings in production."},
+    {lang:"react",   name:"Custom Hooks Library (10+ hooks)",
+     desc:"A personal library of reusable React hooks — useLocalStorage, useDebounce, useFetch, useMediaQuery, useClickOutside, and more. Each hook encapsulates a pattern that would otherwise be repeated across components."},
+    {lang:"html",    name:"Neumorphism UI Kit",
+     desc:"A UI component kit in the neumorphic style — cards, buttons, toggles, and sliders that appear to extrude from the background using dual box-shadows. A controlled exploration of the aesthetic and its accessibility trade-offs."},
+    {lang:"flutter", name:"Auth Flow (JWT + Dio)",
+     desc:"A complete authentication flow — login, register, token refresh, and protected screens — using Dio for HTTP requests and secure storage for JWT tokens. Covers interceptors for automatic token refresh and handling 401 responses gracefully."},
+    {lang:"rust",    name:"Simple HTTP Server (std::net)",
+     desc:"An HTTP/1.1 server built from raw TCP using only Rust's standard library — no frameworks. Parses request lines and headers manually, dispatches to handler functions, and writes response bytes. Reveals what every web framework is abstracting."},
+  ]},
+  { week:32, phase:2, active:true, diff:"Intermediate→Advanced", projects:[
+    {lang:"python",  name:"Data Visualization Dashboard (matplotlib + seaborn)",
+     desc:"A multi-panel analytics dashboard saved as a PDF or displayed via a GUI — line charts, heatmaps, distribution plots, and box plots — generated from a dataset. Focuses on figure composition, styling consistency, and choosing the right chart type for each insight."},
+    {lang:"js",      name:"Wave Animation (Canvas + requestAnimationFrame)",
+     desc:"A smooth, layered sine wave animation rendered on Canvas — multiple waves with different amplitudes, frequencies, and phase offsets. Covers the animation loop, time-based animation (not frame-based), and compositing translucent layers."},
+    {lang:"nodejs",  name:"Background Job Scheduler (node-cron)",
+     desc:"A scheduled task system where jobs run on cron expressions — e.g. nightly reports, hourly syncs, weekly cleanups. Covers cron syntax, preventing overlapping runs of the same job, tracking job history, and graceful shutdown handling."},
+    {lang:"react",   name:"Drag and Drop Kanban Board",
+     desc:"A Kanban board (like Trello) with drag-and-drop between columns using react-dnd or dnd-kit. Covers nested drop zones, drag preview customization, persisting card order after drops, and optimistic updates with rollback on error."},
+    {lang:"html",    name:"Glassmorphism UI Kit",
+     desc:"A component set in the glassmorphism style — frosted-glass cards, modals, and navigation — built with backdrop-filter, semi-transparent backgrounds, and subtle borders. Covers browser support trade-offs and performance implications of backdrop-filter."},
+    {lang:"flutter", name:"News Reader App (REST + infinite scroll)",
+     desc:"A news reader that fetches articles from a public API with infinite scroll pagination, a reading mode, and offline caching. Covers Flutter's http package, caching responses in a local SQLite database, and building a smooth reading UI."},
+    {lang:"rust",    name:"CLI Password Manager (encryption + vault)",
+     desc:"A command-line password vault that stores encrypted credentials in a local file, protected by a master password. Covers key derivation with Argon2, AES-GCM encryption via the aes-gcm crate, and safe secret zeroing in memory."},
+  ]},
+  { week:33, phase:2, active:true, diff:"Advanced", projects:[
+    {lang:"python",  name:"Automated File Backup System (schedule)",
+     desc:"A background service that watches specified folders and backs them up to a destination on a schedule — with incremental updates, versioning, and email notifications. Covers the schedule library, file diffing, and designing a reliable daemon process."},
+    {lang:"js",      name:"Particle System (Canvas physics)",
+     desc:"A physics-based particle system where hundreds of particles are emitted, attracted to the cursor, collide, and fade. Covers spatial optimization with a grid to avoid O(n²) collision checks, velocity/acceleration vectors, and canvas performance techniques."},
+    {lang:"nodejs",  name:"gRPC Service (@grpc/grpc-js)",
+     desc:"A gRPC microservice defined with a Protocol Buffer schema — typed request/response contracts compiled to Node.js. Demonstrates the advantages of binary protocol, strongly typed contracts, and bidirectional streaming over REST."},
+    {lang:"react",   name:"Animation Library Demo (Framer Motion)",
+     desc:"A showcase application demonstrating Framer Motion's capabilities — layout animations, shared element transitions, gesture-driven interactions, and scroll-linked animations. Covers orchestrating animations across a component hierarchy."},
+    {lang:"html",    name:"CSS Pattern Library (20+ patterns)",
+     desc:"A reference library of 20+ repeating background patterns — grids, dots, stripes, zigzags, hexagons — built entirely with CSS gradients and no images. Each pattern is a single CSS rule, demonstrating mastery of gradient positioning and repetition."},
+    {lang:"flutter", name:"Firebase Realtime Chat App",
+     desc:"A multi-user chat app backed by Firebase Realtime Database — messages appear instantly across all connected devices. Covers Firebase configuration, stream-based real-time listeners, user presence, and Firebase Authentication."},
+    {lang:"rust",    name:"Async HTTP Server (Axum)",
+     desc:"A production-structured web server using Axum — Tokio's web framework — with typed route handlers, extractors, shared application state, middleware, and JSON request/response bodies. The entry point into building real web services in Rust."},
+  ]},
+  { week:34, phase:2, active:true, diff:"Advanced", projects:[
+    {lang:"python",  name:"API Rate Limiter (Redis + Flask)",
+     desc:"A Flask middleware that tracks request counts per API key in Redis and enforces rate limits with proper 429 responses and Retry-After headers. Covers the token bucket and sliding window log algorithms and how Redis atomic operations make them safe under concurrency."},
+    {lang:"js",      name:"2D Physics Simulation (Canvas)",
+     desc:"A physics simulation with rigid body dynamics — gravity, friction, elastic collisions, and impulse resolution — rendered on Canvas. Covers AABB collision detection, the separating axis theorem at a basic level, and the game loop pattern."},
+    {lang:"nodejs",  name:"Database Migration Tool (Knex)",
+     desc:"A migration system using Knex.js — writing up/down migrations, running them in sequence, rolling back, and tracking applied migrations in a lock table. Covers why schema migrations are critical for production deployments and how they avoid data loss."},
+    {lang:"react",   name:"Real-Time Dashboard (WebSocket)",
+     desc:"An analytics dashboard that updates live as data streams in over a WebSocket — stock prices, sensor readings, server metrics. Covers windowing incoming data to prevent memory growth, animating incremental chart updates, and reconnection logic."},
+    {lang:"html",    name:"CSS Scroll Animations (Intersection Observer + CSS)",
+     desc:"A scroll-driven storytelling page where elements animate into view as you scroll — parallax text, fading images, counter animations. Uses IntersectionObserver to toggle CSS classes and the new @scroll-timeline API where supported."},
+    {lang:"flutter", name:"Google Maps Integration App",
+     desc:"A location-based app that renders a Google Map, places custom markers, draws routes between points, and searches for nearby places. Covers the google_maps_flutter package, location permissions, geocoding, and handling map lifecycle events."},
+    {lang:"rust",    name:"Database ORM Layer (Diesel or SQLx)",
+     desc:"A data access layer using either Diesel's compile-time SQL verification or SQLx's async runtime queries. Covers schema migrations, typed query results, connection pooling with r2d2 or sqlx's pool, and designing a repository abstraction over the database."},
+  ]},
+  { week:35, phase:2, active:false, break:true, label:"REST WEEK", sub:"Deploy 2–3 of your projects. Write write-ups. Start exploring Rust async (tokio)." },
+  { week:36, phase:2, active:true, diff:"Advanced", projects:[
+    {lang:"python",  name:"Async Web Scraper (aiohttp + asyncio)",
+     desc:"A high-throughput scraper that fetches dozens of pages concurrently using asyncio and aiohttp, with a semaphore to cap concurrency. Demonstrates why async I/O can be orders of magnitude faster than threaded scraping for network-bound tasks."},
+    {lang:"js",      name:"Chart Library from Scratch (Canvas)",
+     desc:"A minimal charting library — bar, line, and pie charts — built on raw Canvas without any dependencies. Covers designing a clean API surface, computing scales and axes from data ranges, and making charts responsive to container size changes."},
+    {lang:"nodejs",  name:"Config Management Service",
+     desc:"A centralized configuration service that stores environment-specific settings, supports feature flags, and notifies connected services of config changes via SSE or WebSocket. Covers the twelve-factor app configuration principle applied in practice."},
+    {lang:"react",   name:"Server State Manager (custom — no lib)",
+     desc:"A custom server state management system — caching, deduplication of in-flight requests, background refetching, stale time — implemented without React Query or SWR. Understanding the problem these libraries solve by solving it yourself."},
+    {lang:"html",    name:"CSS-Only Modal / Popover System",
+     desc:"A full modal and popover system — triggered by checkboxes or the new Popover API — with backdrop, focus trapping via CSS, and smooth transitions, entirely without JavaScript. Demonstrates the CSS :target selector and the native popover attribute."},
+    {lang:"flutter", name:"Video Player App (video_player + chewie)",
+     desc:"A video player app with custom controls, fullscreen support, subtitle rendering, and a playlist. Covers the video_player lifecycle, chewie for the control layer UI, aspect ratio handling, and keeping the screen awake during playback."},
+    {lang:"rust",    name:"Custom Memory Allocator (GlobalAlloc)",
+     desc:"An implementation of the GlobalAlloc trait — a memory allocator that manages a fixed-size heap with a bump allocator or free-list design. Covers unsafe Rust, raw pointer arithmetic, alignment, and why allocators are the lowest layer of a runtime."},
+  ]},
+  { week:37, phase:2, active:true, diff:"Advanced", projects:[
+    {lang:"python",  name:"Custom Shell Interpreter (REPL)",
+     desc:"A Python REPL shell that accepts commands, supports piping, redirection, background processes, and a few built-in commands like cd and history. Covers subprocess management, signal handling, and the read-eval-print loop that all shells are built on."},
+    {lang:"js",      name:"Service Worker + PWA (offline-first)",
+     desc:"A Progressive Web App with a service worker that caches assets on install, serves them when offline, and uses background sync to replay failed requests. Covers the Cache API, push notification integration, and making a web app installable on mobile."},
+    {lang:"nodejs",  name:"App Health Monitoring API",
+     desc:"A health-check API and monitoring dashboard for a backend service — tracking uptime, response times, error rates, memory usage, and dependency status (DB, Redis). Covers the /health and /metrics endpoint conventions and how orchestration platforms use them."},
+    {lang:"react",   name:"Component Design System (Storybook)",
+     desc:"A documented component library built in Storybook — buttons, inputs, modals, tables — each with stories for every state, variant, and edge case. Covers component API design, prop documentation, accessibility testing in Storybook, and publishing a package."},
+    {lang:"html",    name:"Responsive HTML Email Template",
+     desc:"A fully responsive HTML email template that renders correctly across Gmail, Outlook, and Apple Mail — using tables for layout (yes, really) and inline styles. A humbling exercise in designing for the most constraint-filled rendering environment in existence."},
+    {lang:"flutter", name:"Push Notification Service (FCM)",
+     desc:"An app that receives and displays push notifications from Firebase Cloud Messaging — foreground and background — with notification channels, deep linking from taps, and a notification history screen. Covers FCM token management and platform-specific setup."},
+    {lang:"rust",    name:"Parser Combinator Library (nom)",
+     desc:"A domain-specific language parser built with nom's combinator approach — parsing structured text like a configuration format, a simple expression language, or a data protocol. Covers nom's tag, take, alt, many0, and how composing small parsers builds complex ones."},
+  ]},
+  { week:38, phase:2, active:true, diff:"Advanced", projects:[
+    {lang:"python",  name:"JWT Auth System (from scratch, no lib)",
+     desc:"A JWT implementation that generates tokens from a header/payload/signature without PyJWT — base64url encoding, HMAC-SHA256 signing, and validation. Understanding what the library does at each step makes the security guarantees and attack vectors clear."},
+    {lang:"js",      name:"Custom SPA Router (History API)",
+     desc:"A client-side router for a single-page application using the History API — pushState, popstate, and link interception — supporting nested routes, route params, and guards. The foundation of understanding how React Router works internally."},
+    {lang:"nodejs",  name:"Feature Flags Service",
+     desc:"A feature flag system that enables or disables features per user, environment, or percentage rollout — evaluated at request time. Covers gradual rollouts, A/B test assignment, flag evaluation performance, and why feature flags decouple deployment from release."},
+    {lang:"react",   name:"SSR App (Next.js, dynamic routes)",
+     desc:"A server-side rendered application using Next.js — dynamic routes, getServerSideProps vs getStaticProps vs ISR, API routes, and head/meta management. Covers when SSR helps and when it hurts, and the hydration process that bridges server and client."},
+    {lang:"html",    name:"Accessible Component Library (ARIA)",
+     desc:"A library of fully accessible interactive components — modal dialogs, dropdown menus, tab panels, tooltips — built to meet WCAG 2.1 AA. Each component has correct ARIA roles, keyboard navigation, and focus management as defined in the ARIA Authoring Practices Guide."},
+    {lang:"flutter", name:"Camera & Image Capture App",
+     desc:"An app that accesses the device camera, captures photos and video, applies filters, and saves to the gallery. Covers the camera package, permission handling, processing image bytes, and the platform-specific behavior differences between iOS and Android."},
+    {lang:"rust",    name:"Compiler Frontend — Lexer + AST Parser",
+     desc:"A lexer and recursive-descent parser for a toy language — producing an Abstract Syntax Tree from source text. Covers tokenization, token types, recursive parsing of expressions with precedence, and error recovery. The foundation of writing any compiler or interpreter."},
+  ]},
+
+  // ══ TRANSITION — C FAMILY + JAVA ══════════════════════════
+  { week:39, phase:3, active:false, transition:true,
+    label:"🔩  TRANSITION — C, C++, C#, and Java Introduced",
+    sub:"Set up GCC, Clang, .NET SDK, and JDK. Configure VS Code or JetBrains IDEs. Rest and mentally prepare for systems-level thinking." },
+
+  // ══ PHASE 3 — ADVANCED ════════════════════════════════════
+  { week:40, phase:3, active:true, diff:"Advanced (C Family: Beginner)", projects:[
+    {lang:"python",  name:"Blockchain Simulator (PoW)",
+     desc:"A minimal blockchain implemented in pure Python — blocks with hashes, a chain validation function, and a proof-of-work mining loop. Demystifies what a blockchain actually is by building one at the data structure level."},
+    {lang:"js",      name:"Virtual DOM Implementation",
+     desc:"A tiny virtual DOM library — a createElement function, a diff algorithm, and a patch function that applies minimal changes to the real DOM. Understanding what React's reconciler does by implementing it at ~150 lines."},
+    {lang:"nodejs",  name:"Circuit Breaker Implementation",
+     desc:"A circuit breaker middleware that wraps outgoing service calls and opens the circuit (stops calling) after a failure threshold, preventing cascade failures. Covers the three states (closed, open, half-open) and the resilience pattern behind it."},
+    {lang:"react",   name:"E-commerce Full Checkout Flow",
+     desc:"A complete multi-step checkout — cart review, shipping address, payment method, and order confirmation — with form persistence between steps and simulated payment processing. Covers complex form orchestration and the UX patterns that reduce checkout abandonment."},
+    {lang:"html",    name:"CSS Container Queries Demo",
+     desc:"A component that adapts its internal layout based on the size of its container — not the viewport. Container queries are newer CSS and this project demonstrates why they're a paradigm shift for building truly reusable, context-aware components."},
+    {lang:"flutter", name:"Bluetooth Communication App (flutter_blue)",
+     desc:"A mobile app that scans for Bluetooth Low Energy devices, connects to one, reads characteristic values, and sends commands. Covers BLE concepts (advertising, GATT, characteristics), permission handling, and the async communication model."},
+    {lang:"rust",    name:"FFI Bridge with C Library",
+     desc:"A Rust program that calls into a C library using Rust's Foreign Function Interface — linking against a .so or .lib, declaring unsafe extern blocks, and wrapping the raw calls in safe Rust abstractions. The key to interoperating with the existing C ecosystem."},
+    {lang:"c",       name:"Hello World + Pointers & Memory Model",
+     desc:"Your first C program, followed by a set of small experiments that deliberately explore pointers — pointer arithmetic, dereferencing, pointer-to-pointer, and the difference between stack and heap addresses. Not a tutorial, but a mental model builder."},
+    {lang:"cpp",     name:"OOP Basics — Classes, Inheritance, Polymorphism",
+     desc:"A C++ program that builds a class hierarchy — e.g. Shape → Circle/Rectangle/Triangle — with virtual methods, overrides, and a polymorphic container. Covers the mechanics of vtables, object slicing, and the differences from C's struct-based approach."},
+    {lang:"csharp",  name:"Hello World + LINQ Basics",
+     desc:"Your first C# program, followed by a set of LINQ query exercises over collections — filtering, projecting, grouping, and aggregating. LINQ is one of C#'s most powerful features and this establishes a fluent mental model for working with data in .NET."},
+    {lang:"java",    name:"Hello World + OOP Fundamentals",
+     desc:"Your first Java program and a class hierarchy exercise — interfaces, abstract classes, concrete implementations, and method overriding. Covers the JVM execution model and Java's strong compile-time type system."},
+  ]},
+  { week:41, phase:3, active:true, diff:"Advanced (C Family: Beginner)", projects:[
+    {lang:"python",  name:"Multi-Threaded File Downloader (ThreadPoolExecutor)",
+     desc:"A file downloader that fetches multiple URLs concurrently via a thread pool, with a progress bar per file and a combined completion summary. Covers the concurrent.futures module, thread safety, and the GIL's implications for I/O-bound parallelism."},
+    {lang:"js",      name:"State Management Library (Redux-like, ~100 lines)",
+     desc:"A minimal Redux implementation — createStore, dispatch, getState, subscribe, and combineReducers — in about 100 lines of JavaScript. Understanding how Redux works internally makes every Redux bug easier to diagnose and every alternative clearer."},
+    {lang:"nodejs",  name:"Distributed Cache (LRU, in-memory)",
+     desc:"An in-memory LRU (Least Recently Used) cache server accessible over a simple TCP or HTTP protocol. Covers the LRU eviction algorithm using a doubly-linked list and hash map, and why distributed caches are a foundational infrastructure component."},
+    {lang:"react",   name:"Full Admin Dashboard",
+     desc:"A comprehensive admin interface — user management table, analytics charts, settings pages, and a sidebar navigation — all wired to a mock API. Focuses on organizing a large React codebase into features rather than file types."},
+    {lang:"html",    name:"Advanced CSS Grid Layout (Masonry-like)",
+     desc:"A photo gallery with a masonry (Pinterest-style) layout using CSS Grid's dense placement algorithm and experimental masonry value. Covers the trade-offs between CSS-only and JS-measured masonry and what the upcoming native CSS masonry spec proposes."},
+    {lang:"flutter", name:"Custom Animations & Transitions",
+     desc:"A showcase app demonstrating Flutter's animation APIs — AnimationController, Tween, CurvedAnimation, AnimatedBuilder, and Hero transitions. Covers the difference between implicit and explicit animations and when each approach is appropriate."},
+    {lang:"rust",    name:"WASM Module (wasm-bindgen)",
+     desc:"A Rust function compiled to WebAssembly and called from JavaScript — e.g. a CPU-intensive computation like image manipulation or a hash function. Covers the wasm-bindgen toolchain, JS/Rust type boundaries, and the performance use case for WASM."},
+    {lang:"c",       name:"Array Manipulation Toolkit",
+     desc:"A set of C functions for common array operations — bubble sort, insertion sort, binary search, reverse, rotate — implemented without standard library helpers. A foundation in manual memory management and pointer-based array iteration."},
+    {lang:"cpp",     name:"Generic Template Functions Library",
+     desc:"A library of generic algorithms — max, min, sort, search, accumulate — implemented with C++ templates so they work on any comparable type. Covers template instantiation, specialization, and how the STL's algorithm header is designed."},
+    {lang:"csharp",  name:"Console Calculator App",
+     desc:"A command-line calculator in C# that handles expressions with proper operator precedence, parentheses, and decimal support. Covers C#'s switch expressions, exception handling with try/catch, and the difference between value types and reference types."},
+    {lang:"java",    name:"Data Structures (Stack, Queue, LinkedList)",
+     desc:"Manual implementations of Stack, Queue, and LinkedList in Java without using java.util. Reinforces understanding of what these structures are — the memory layout, time complexity, and when each is appropriate — rather than just how to use them."},
+  ]},
+  { week:42, phase:3, active:true, diff:"Advanced", projects:[
+    {lang:"python",  name:"Neural Network from Scratch (NumPy only)",
+     desc:"A multi-layer neural network — forward pass, backpropagation, and gradient descent — implemented using only NumPy matrix operations. No PyTorch or TensorFlow. Deeply internalizes what training a neural network means at the calculus and linear algebra level."},
+    {lang:"js",      name:"Template Engine (like Handlebars, mini)",
+     desc:"A string template engine that supports variable interpolation, conditionals, loops, and partials — implemented from a regex-based tokenizer and a recursive renderer. Demonstrates how server-side templating engines work at their core."},
+    {lang:"nodejs",  name:"Custom ORM (Node.js, raw SQL)",
+     desc:"A lightweight ORM that wraps a database driver, maps JavaScript classes to tables, generates SQL for CRUD operations, and supports basic associations. Building this reveals the complexity that production ORMs like Prisma or Sequelize are managing."},
+    {lang:"react",   name:"Video Streaming UI",
+     desc:"A video platform UI — browsable library, player page with recommendations, adaptive quality selector, and a subtitles toggle — wired to a backend that serves HLS streams. Covers the video element's src switching, HLS.js integration, and buffering state indicators."},
+    {lang:"html",    name:"CSS Houdini Paint Worklet",
+     desc:"A custom CSS background pattern registered as a CSS Paint Worklet using the Houdini Paint API. The pattern updates based on custom CSS properties you define. An exploration of the future of CSS extensibility."},
+    {lang:"flutter", name:"Flutter + Rust FFI App",
+     desc:"A Flutter app that calls a Rust function compiled to a native library via FFI — offloading a CPU-intensive task to Rust while the Flutter UI stays smooth. Covers flutter_rust_bridge toolchain setup, data type mapping between Dart and Rust, and async FFI calls."},
+    {lang:"rust",    name:"Custom Smart Pointer (Rc/RefCell clone)",
+     desc:"Implementing Rc<T> (reference-counted pointer) and RefCell<T> (interior mutability cell) from scratch using unsafe Rust. Understanding these types at the implementation level clarifies Rust's ownership model, memory safety guarantees, and the role of unsafe."},
+    {lang:"c",       name:"Linked List (singly + doubly)",
+     desc:"Full implementations of singly and doubly linked lists in C — with insert, delete, search, reverse, and traversal functions. Covers manual heap allocation and deallocation, pointer-to-pointer for list head updates, and valgrind-clean memory management."},
+    {lang:"cpp",     name:"STL Containers Deep Dive",
+     desc:"A project that uses vector, deque, list, map, unordered_map, set, and priority_queue with benchmarks comparing their performance on the same operations. Covers iterator invalidation, amortized complexity, and choosing the right container for each use case."},
+    {lang:"csharp",  name:"OOP & Design Patterns Demo",
+     desc:"A C# project implementing 5–6 classic GoF design patterns — Factory, Observer, Strategy, Decorator, Command — in realistic small scenarios. Covers C# interfaces, abstract classes, delegates, and events as the idiomatic way to implement these patterns."},
+    {lang:"java",    name:"Collections Framework App",
+     desc:"A program that makes practical use of Java's Collections framework — HashMap, TreeMap, LinkedHashMap, ArrayList, PriorityQueue — comparing their behavior and choosing the right one for each scenario. Covers the Comparable and Comparator interfaces."},
+  ]},
+  { week:43, phase:3, active:true, diff:"Advanced", projects:[
+    {lang:"python",  name:"ORM from Scratch (Python metaclasses)",
+     desc:"A basic ORM that uses Python metaclasses to map class definitions to database tables — field declarations on the class auto-generate SQL CREATE TABLE and CRUD queries. An advanced exploration of Python's data model and metaprogramming."},
+    {lang:"js",      name:"WebSocket Chat Client (raw ws)",
+     desc:"A chat client that communicates over raw WebSocket — handling connection state, reconnection with exponential backoff, message queuing while offline, and distinguishing system events from user messages. The low-level perspective before socket.io abstractions."},
+    {lang:"nodejs",  name:"Plugin System (dynamic loading)",
+     desc:"An application that supports third-party plugins loaded at runtime — plugins register hooks, extend behavior, and can be enabled or disabled. Covers Node's module system for dynamic require/import, plugin lifecycle management, and sandboxing plugin code."},
+    {lang:"react",   name:"Multi-Language App (i18n + locale switching)",
+     desc:"A fully internationalized React app supporting English, French, and one other language — with locale-aware date/number formatting, RTL layout support, and pluralization rules. Covers react-i18next and the complexities of making software globally usable."},
+    {lang:"html",    name:"Layer-Based Design System (CSS Layers)",
+     desc:"A CSS architecture using @layer to define reset, base, theme, layout, component, and utility layers with explicit cascade precedence. Demonstrates how @layer solves specificity wars and enables predictable CSS at scale."},
+    {lang:"flutter", name:"Advanced State Management (Riverpod)",
+     desc:"A refactored app that replaces ad-hoc setState and Provider calls with Riverpod — using StateNotifier, AsyncNotifier, and provider scoping. Covers Riverpod's design philosophy, testability benefits, and how it avoids Provider's context requirement."},
+    {lang:"rust",    name:"Trait Object System Demo (dyn Trait)",
+     desc:"A program built around Rust's trait objects — a plugin registry, a rendering pipeline, or a command system — using Box<dyn Trait> for runtime polymorphism. Explores the performance trade-offs between static dispatch (generics) and dynamic dispatch (trait objects)."},
+    {lang:"c",       name:"Stack & Queue from Scratch",
+     desc:"Array-backed and linked-list-backed implementations of Stack and Queue in C — with capacity management, overflow/underflow handling, and performance comparisons. Builds the mental model of how higher-level language runtimes implement their call stacks."},
+    {lang:"cpp",     name:"Smart Pointers (unique_ptr, shared_ptr, weak_ptr)",
+     desc:"A project that reimplements unique_ptr, shared_ptr, and weak_ptr from scratch using templates and RAII. Understanding these types at the implementation level makes C++ memory management intuitive rather than magical."},
+    {lang:"csharp",  name:"Entity Framework CRUD App",
+     desc:"A data access layer using Entity Framework Core — code-first models, migrations, LINQ queries, relationships (one-to-many, many-to-many), and async database operations. The .NET ecosystem's primary ORM, central to most .NET backend development."},
+    {lang:"java",    name:"File I/O System (NIO2)",
+     desc:"A file management application using Java NIO2 — Path, Files, WatchService for directory monitoring, and channel-based I/O for efficient large file operations. Covers the design improvements NIO2 made over the original java.io API."},
+  ]},
+  { week:44, phase:3, active:false, break:true, label:"REST WEEK", sub:"Review C and C++ memory management. Practice Java Spring Boot setup. Breathe." },
+  { week:45, phase:3, active:true, diff:"Advanced", projects:[
+    {lang:"python",  name:"HTTP Parser (RFC-compliant, from scratch)",
+     desc:"An HTTP/1.1 request and response parser written in pure Python — parsing request lines, headers, chunked transfer encoding, and bodies without using the http module. Deep understanding of the protocol that every web developer uses but few have read."},
+    {lang:"js",      name:"IndexedDB Wrapper Library",
+     desc:"A Promise-based wrapper around the IndexedDB API — open, put, get, delete, and query across object stores — with a clean async interface that hides the verbose event-based API. A practical look at browser-side database architecture."},
+    {lang:"nodejs",  name:"Mini Build Tool (like Webpack, bundler)",
+     desc:"A minimal JavaScript bundler that resolves import/require dependencies, builds a module graph, and concatenates them into a single output file. Understanding module resolution and bundling at this level makes Webpack and Rollup configs far less mysterious."},
+    {lang:"react",   name:"Micro-Frontend Architecture (Module Federation)",
+     desc:"A host application that loads independent React apps from separate deployment URLs using Webpack Module Federation. Covers the organizational and technical trade-offs of micro-frontends and how shared dependencies are negotiated between federated modules."},
+    {lang:"html",    name:"Typographic Scale System",
+     desc:"A typographic design system based on a modular scale — fluid type using clamp(), a vertical rhythm baseline grid, optical spacing adjustments, and paired heading/body font stacks. Covers the mathematics and aesthetics of professional typographic systems."},
+    {lang:"flutter", name:"Custom Painter — Generative Art App",
+     desc:"An app that generates algorithmic art — spirals, fractals, Voronoi diagrams, or wave patterns — drawn frame-by-frame using Flutter's CustomPainter. Covers the Canvas API in Dart, animation timing, and the joy of making something visual from pure math."},
+    {lang:"rust",    name:"Distributed Consensus Demo (Raft-lite)",
+     desc:"A simplified Raft consensus algorithm — leader election, log replication, and commit — running across multiple threads simulating nodes. Not a production implementation, but a genuine exploration of what distributed systems consensus means."},
+    {lang:"c",       name:"File I/O Program (binary + text modes)",
+     desc:"A C program that reads and writes both text and binary files — a config reader, a binary record serializer, and a hex dump utility. Covers FILE*, fread/fwrite, seeking, and the critical difference between text and binary mode on different operating systems."},
+    {lang:"cpp",     name:"Linked List with Templates",
+     desc:"A fully generic doubly linked list implementation using C++ templates — with iterator support, range-based for loop compatibility, and move semantics. Covers the Rule of Five, copy vs move semantics, and what STL container authors deal with."},
+    {lang:"csharp",  name:"ASP.NET Core Minimal API",
+     desc:"A lightweight REST API using .NET's Minimal API pattern — endpoint definition inline without controllers, dependency injection, middleware, and OpenAPI generation. Covers the modern .NET approach to building lean backend services."},
+    {lang:"java",    name:"JDBC Database Application",
+     desc:"A Java application that communicates directly with a database via JDBC — prepared statements, transactions, result set mapping, and connection pooling via HikariCP. The low-level layer that every Java ORM sits on top of."},
+  ]},
+  { week:46, phase:3, active:true, diff:"Advanced", projects:[
+    {lang:"python",  name:"Fuzzer / Input Mutation Tool",
+     desc:"A coverage-guided fuzzer that generates mutated inputs from a seed corpus to find crashes or unexpected behavior in a target program. Covers mutation strategies (bit flipping, byte insertion, format-aware mutations) and how fuzzers are used in security testing."},
+    {lang:"js",      name:"Observable Pattern Library",
+     desc:"A reactive programming library implementing Observables, Subjects, and a set of operators (map, filter, mergeMap, switchMap) — similar to RxJS at ~200 lines. Understanding RxJS internals from the ground up by building the subscription and operator chain model."},
+    {lang:"nodejs",  name:"Test Framework (mini Jest clone)",
+     desc:"A minimal test runner — describe, it, expect with matchers, beforeEach/afterEach hooks, and formatted output — implemented from scratch. Demystifies what test frameworks do behind the scenes and why Jest's architecture is designed as it is."},
+    {lang:"react",   name:"Offline-First App (IndexedDB + sync)",
+     desc:"An app that works fully offline — reads and writes to IndexedDB — and syncs with the server when connectivity is restored. Covers conflict resolution strategies, optimistic updates, and the service worker background sync API."},
+    {lang:"html",    name:"Motion Design System (CSS Keyframes)",
+     desc:"A cohesive motion design system — an entrance animation library, a transition vocabulary, and a set of attention animations — all defined as named keyframes and CSS utility classes. Covers easing functions, animation orchestration, and reduced-motion media queries."},
+    {lang:"flutter", name:"Cross-Platform Desktop App",
+     desc:"A Flutter app targeting macOS, Windows, or Linux — with platform-specific window management, native menu bar integration, keyboard shortcuts, and drag-and-drop file handling. Covers Flutter Desktop's current capabilities and platform channel differences."},
+    {lang:"rust",    name:"Basic Game Engine (ECS pattern)",
+     desc:"A minimal entity-component-system game engine — entities as IDs, components as data, systems as pure functions over components — with a simple update loop. Covers why ECS is cache-friendly compared to inheritance hierarchies and how it structures game logic."},
+    {lang:"c",       name:"String Functions Reimplemented (strlen, strcpy…)",
+     desc:"Reimplementations of the C standard library's string functions — strlen, strcpy, strcat, strstr, strtok, memcpy, memmove — from scratch. Building these reveals exactly what C strings are and why buffer overflows are a class of vulnerability."},
+    {lang:"cpp",     name:"Observer Pattern Implementation",
+     desc:"A C++ event system using the Observer pattern with typed callbacks — subjects maintain lists of observers, notify them on state change, and allow unsubscription. Covers function pointers vs std::function, the signal/slot paradigm, and template-based event buses."},
+    {lang:"csharp",  name:"Windows Forms GUI App",
+     desc:"A desktop GUI application using WinForms — a data management tool or a productivity app — with forms, menus, dialogs, and database integration. Covers WinForms' event model, the designer-generated code pattern, and the platform's accessibility features."},
+    {lang:"java",    name:"Spring Boot REST API",
+     desc:"A full REST API using Spring Boot — controllers, services, repositories, JPA entities, and input validation. The canonical Java backend stack and the gateway to enterprise Java development patterns."},
+  ]},
+  { week:47, phase:3, active:true, diff:"Advanced→Pro", projects:[
+    {lang:"python",  name:"Toy Language Interpreter (lexer → AST → eval)",
+     desc:"A complete interpreter pipeline for a small expression language — lexer that tokenizes source, parser that builds an AST, and an evaluator that walks the tree. The same architecture that Python, Ruby, and Lua use, just at a smaller scale."},
+    {lang:"js",      name:"Browser Extension (Chrome Manifest V3)",
+     desc:"A Chrome extension using Manifest V3 — a popup, a background service worker, content scripts that inject into pages, and inter-component messaging. Covers the constraints MV3 imposes, the permissions model, and the browser's extension sandboxing."},
+    {lang:"nodejs",  name:"Documentation Generator (JSDoc-like)",
+     desc:"A tool that parses JavaScript source files, extracts JSDoc comments, and generates an HTML documentation site. Covers AST parsing with Acorn or Babel parser, comment extraction, and template-based HTML generation."},
+    {lang:"react",   name:"Performance Monitoring Tool (React Profiler)",
+     desc:"An app instrumented with the React Profiler API — tracking render counts, render duration, and wasted renders per component — displayed in a live overlay. The project teaches performance optimization by first accurately measuring the problem."},
+    {lang:"html",    name:"CSS Color System Generator",
+     desc:"An interactive tool that generates a full color system from a single brand color — primary shades, tints, semantic colors (success, warning, danger), and accessible contrast pairings — exported as CSS custom properties or Tailwind config."},
+    {lang:"flutter", name:"Flutter Plugin Package (native platform code)",
+     desc:"A Flutter plugin package that exposes a native platform feature — device battery, haptics, or a sensor — as a Dart API using platform channels. Covers writing native Swift/Kotlin code, defining the channel protocol, and publishing a package to pub.dev."},
+    {lang:"rust",    name:"Bare-Metal OS Module (no_std, RISC-V or x86)",
+     desc:"A no_std Rust program targeting a bare-metal environment — a RISC-V QEMU VM or x86 in real mode — that initializes hardware and prints to a UART or VGA buffer. The entry point to OS development, showing what happens before main() even runs."},
+    {lang:"c",       name:"Dynamic Memory Allocator (malloc/free clone)",
+     desc:"An implementation of malloc, calloc, realloc, and free using sbrk or mmap for raw memory from the OS, with a free-list and coalescing of adjacent free blocks. The system that every C program relies on and the source of most memory bugs."},
+    {lang:"cpp",     name:"Binary File Serializer",
+     desc:"A serialization library that reads and writes C++ objects to binary files — handling primitive types, strings, vectors, and nested structs — with a version tag for forward compatibility. Covers endianness, struct padding, and why JSON/protobuf exist."},
+    {lang:"csharp",  name:"Unit Test Suite (xUnit + Moq)",
+     desc:"A comprehensive test suite for a business logic layer — unit tests with xUnit, mocking dependencies with Moq, and test coverage reporting. Covers the AAA (Arrange, Act, Assert) pattern, testing best practices in .NET, and dependency injection for testability."},
+    {lang:"java",    name:"JUnit 5 Test Suite + Mockito",
+     desc:"A thorough test suite using JUnit 5 — parameterized tests, nested test classes, lifecycle annotations — with Mockito for mocking dependencies. Covers Java testing idioms, writing tests that survive refactoring, and the Test Pyramid model."},
+  ]},
+  { week:48, phase:3, active:true, diff:"Advanced→Pro", projects:[
+    {lang:"python",  name:"Distributed Task Queue (multiprocessing + Redis)",
+     desc:"A Celery-like distributed task queue built from scratch — workers pull tasks from Redis, execute them, and report results. Covers Python multiprocessing, inter-process communication via Redis pub/sub, task serialization, and retry logic."},
+    {lang:"js",      name:"Raw WebGL 3D Cube (no Three.js)",
+     desc:"A rotating 3D cube rendered using raw WebGL — vertex and fragment shaders written in GLSL, a projection matrix computed from scratch, and a render loop. The foundational knowledge that makes Three.js, Babylon.js, and game engines comprehensible."},
+    {lang:"nodejs",  name:"Code Generator CLI (AST-based)",
+     desc:"A CLI tool that generates boilerplate code from templates — e.g. a new REST resource with controller, service, model, and test files — by manipulating an AST or using template strings. A productivity tool that also teaches code generation patterns."},
+    {lang:"react",   name:"In-Browser Code Sandbox",
+     desc:"A browser-based coding environment where you write React/HTML/CSS/JS and see it rendered in an iframe — like a mini CodeSandbox. Covers blob URLs, srcdoc iframes, sandboxing untrusted code, and transpiling JSX in the browser with Babel standalone."},
+    {lang:"html",    name:"Print Stylesheet System",
+     desc:"A comprehensive @media print stylesheet system that transforms a complex web page into a clean, paper-ready document — hiding navigation, reformatting columns, expanding links, and inserting page break rules. A surprisingly deep rabbit hole."},
+    {lang:"flutter", name:"Production-Ready App Architecture (Clean Arch)",
+     desc:"A Flutter app restructured using Clean Architecture — entities, use cases, repositories, and data sources in distinct layers with dependency inversion. Covers why architecture matters for testability, the flutter_bloc pattern, and feature-based folder structure."},
+    {lang:"rust",    name:"Safe Systems Utility (CLI tool, published crate)",
+     desc:"A genuinely useful CLI tool — a file processor, a network utility, a data converter — designed with a public API, documented with rustdoc, tested, and published to crates.io. The full lifecycle of building and releasing a Rust open-source crate."},
+    {lang:"c",       name:"Binary Search Tree (with traversals)",
+     desc:"A complete BST implementation in C — insert, delete, search, and in/pre/post-order traversals — plus AVL balancing if you want the challenge. Covers recursive vs iterative approaches and the nuance of deleting a node with two children."},
+    {lang:"cpp",     name:"Thread Pool Implementation",
+     desc:"A thread pool that maintains a fixed number of worker threads, accepts tasks via a concurrent queue, and distributes work without thread creation overhead. Covers std::thread, std::mutex, std::condition_variable, and the task queue design."},
+    {lang:"csharp",  name:"Full REST API (ASP.NET Core + EF + JWT)",
+     desc:"A production-structured ASP.NET Core API — controllers, EF Core with migrations, JWT auth, input validation with FluentValidation, and Swagger documentation. The standard .NET backend stack that most C# web development jobs require."},
+    {lang:"java",    name:"Design Patterns Showcase (GoF patterns)",
+     desc:"A Java project implementing all 23 Gang of Four design patterns in realistic mini-scenarios. Covers creational, structural, and behavioral patterns in idiomatic Java — with notes on which patterns Java's standard library already uses internally."},
+  ]},
+
+  // ══ TRANSITION — ASSEMBLY ═════════════════════════════════
+  { week:49, phase:4, active:false, transition:true,
+    label:"⚙️  TRANSITION — Assembly Language Introduced",
+    sub:"Install NASM. Read 'Introduction to x86-64 Assembly'. Understand CPU registers, syscalls, and the stack frame. Rest and prepare." },
+
+  // ══ PHASE 4 — PRO ═════════════════════════════════════════
+  { week:50, phase:4, active:true, diff:"Pro", projects:[
+    {lang:"python",  name:"OS-Level System Monitor (psutil + /proc)",
+     desc:"A system monitoring tool that reads CPU, memory, disk, and network metrics from /proc and psutil — displayed in a live TUI with per-process detail. Goes beneath Python's abstractions to understand how the OS exposes system state to user-space programs."},
+    {lang:"js",      name:"Mini Language Interpreter (in JS)",
+     desc:"A complete interpreter for a small scripting language — variables, functions, closures, loops, and recursion — written in JavaScript. At this point you've written one in Python too; comparing the two implementations reveals what interpreters fundamentally need."},
+    {lang:"nodejs",  name:"Monorepo Toolchain (Nx-like, custom)",
+     desc:"A custom monorepo task runner — discovers packages, resolves dependency order, runs tasks in parallel where safe, caches results, and provides affected-project detection. Understanding what Nx, Turborepo, and Lerna are doing under the hood."},
+    {lang:"react",   name:"No-Code Form Builder",
+     desc:"A drag-and-drop form builder where you assemble fields, configure validation rules, and preview the resulting form — which can be exported as a JSON schema or a React component. Covers meta-programming patterns and building UIs that generate other UIs."},
+    {lang:"html",    name:"Advanced CSS Architecture (ITCSS + Tokens)",
+     desc:"A CSS architecture based on ITCSS (Inverted Triangle CSS) layering — settings, tools, generic, elements, objects, components, utilities — combined with a design token system and a build pipeline that compiles tokens to CSS, SCSS, and JS."},
+    {lang:"flutter", name:"Advanced Animations (CustomPainter + Rive)",
+     desc:"A Flutter app combining CustomPainter for code-driven animations with Rive for designer-created interactive animations. Covers the performance model of Flutter's Impeller renderer, reducing rebuilds with RepaintBoundary, and Rive state machine integration."},
+    {lang:"rust",    name:"Network Protocol Implementation (custom TCP)",
+     desc:"A custom application-layer protocol built on top of TCP — a message framing scheme, a request/response model, and a multiplexed client/server. Covers Tokio's TcpStream, framing with length-prefixed messages, and implementing back-pressure."},
+    {lang:"c",       name:"Hash Table with Open Addressing",
+     desc:"A hash table implementation using open addressing with linear/quadratic probing and Robin Hood hashing — with a load factor threshold and dynamic resizing. Covers hash function design, collision resolution strategies, and the performance trade-offs between chaining and open addressing."},
+    {lang:"cpp",     name:"Custom Vector Implementation",
+     desc:"A reimplementation of std::vector from scratch — dynamic array, move semantics, exception safety guarantees, iterator implementation, and emplace_back. Understanding the actual complexity that std::vector is managing makes you a better user of the STL."},
+    {lang:"csharp",  name:"Dependency Injection Container (from scratch)",
+     desc:"A minimal dependency injection container — service registration, lifetime management (singleton, transient, scoped), and constructor injection — without using Microsoft.Extensions.DependencyInjection. Understanding DI at the implementation level."},
+    {lang:"java",    name:"JavaFX GUI Application",
+     desc:"A desktop GUI application using JavaFX — FXML layout files, a controller, CSS theming, data binding, and a Service for background tasks. Covers the JavaFX thread model — the FX Application Thread — and why UI updates from background threads must be marshaled."},
+    {lang:"asm",     name:"Hello World (x86-64 Linux Syscall — NASM)",
+     desc:"Your first Assembly program: directly invoking Linux's write syscall by placing arguments in registers (rax, rdi, rsi, rdx) and executing a syscall instruction. The moment you see the entire software stack from the bottom — no libc, no runtime, just you and the kernel."},
+  ]},
+  { week:51, phase:4, active:true, diff:"Pro", projects:[
+    {lang:"python",  name:"Peer-to-Peer Network Simulator",
+     desc:"A simulation of a peer-to-peer network where nodes discover each other, route messages via gossip protocol, handle node failure, and reach eventual consistency. Covers distributed systems concepts — CAP theorem, gossip, and self-healing networks."},
+    {lang:"js",      name:"Reactive State Engine (Signals-like)",
+     desc:"A fine-grained reactivity system — like SolidJS's signals — where state cells automatically track their dependents and re-run only the computations that depend on changed values. Understanding the reactivity model that's replacing virtual DOM diffing."},
+    {lang:"nodejs",  name:"Streaming ETL Pipeline",
+     desc:"An Extract-Transform-Load pipeline using Node.js streams — reading from a CSV or API, transforming records through a sequence of Transform streams, and writing to a database or file. Covers backpressure, highWaterMark tuning, and the pipeline utility."},
+    {lang:"react",   name:"Visual Component Editor (drag-to-build)",
+     desc:"A no-code page builder where you drag components onto a canvas, select them to edit props, and export the result as JSX. Covers serializing component trees as JSON, recursive rendering from config, and the undo/redo stack for structural changes."},
+    {lang:"html",    name:"CSS-in-JS Alternative System (CSS Modules clone)",
+     desc:"A build-time CSS Modules implementation — a preprocessor that scopes class names to components by appending hashes, generates JS exports for each class name, and outputs scoped CSS files. What CSS Modules, vanilla-extract, and Linaria are doing at build time."},
+    {lang:"flutter", name:"Platform Channels Deep Dive (custom native bridge)",
+     desc:"A Flutter app that implements a non-trivial platform channel — e.g. a background location service, a native camera filter, or a biometric auth flow — with complete Swift and Kotlin implementations on the native side. Production-level native integration."},
+    {lang:"rust",    name:"Lock-Free Data Structure (Atomic + Arc)",
+     desc:"A lock-free MPSC queue or stack using Rust's atomic primitives — compare_exchange, fetch_add, memory orderings — without any Mutex. Covers the memory ordering model (Acquire/Release/SeqCst), ABA problem, and why lock-free is harder than it looks."},
+    {lang:"c",       name:"TCP Socket Chat Program",
+     desc:"A multi-client TCP chat server and client in C — the server uses select() or epoll() for non-blocking I/O across many connections without a thread per client. The C-level view of network programming that all higher-level networking libraries are built on."},
+    {lang:"cpp",     name:"Mini Console Game (ncurses)",
+     desc:"A small terminal game — Snake, Tetris, or Sokoban — using ncurses for terminal UI. Covers ncurses window management, non-blocking keyboard input, the game loop in a terminal context, and the challenge of timing-based logic without a GPU."},
+    {lang:"csharp",  name:"SignalR Real-Time App",
+     desc:"A real-time collaborative application — a whiteboard, a live dashboard, or a multiplayer quiz — using ASP.NET Core SignalR for bidirectional communication. Covers Hub methods, group messaging, connection lifecycle, and the client-side SignalR JS library."},
+    {lang:"java",    name:"Multi-Threaded Application (ExecutorService)",
+     desc:"A concurrent Java application — a parallel file processor, a web crawler, or a work distribution system — using ExecutorService, CompletableFuture, and structured concurrency (Java 21+). Covers thread safety, deadlock prevention, and the Fork/Join framework."},
+    {lang:"asm",     name:"Register-Based Calculator (x86-64 NASM)",
+     desc:"An integer arithmetic calculator in x86-64 assembly — reading digits from stdin, performing add/sub/mul/div operations in registers, and writing results to stdout. Covers integer representation, signed arithmetic, and multi-digit number handling at the register level."},
+  ]},
+  { week:52, phase:4, active:true, diff:"Pro", projects:[
+    {lang:"python",  name:"Full-Stack Python Mini Framework (WSGI)",
+     desc:"A micro web framework — routing, middleware pipeline, request/response objects, template engine integration, and a dev server — built on bare WSGI. Understanding exactly what Flask and Django are doing at their foundations."},
+    {lang:"js",      name:"Full Custom SPA Framework (routing + state + vdom)",
+     desc:"A complete single-page application framework — a virtual DOM with reconciliation, a reactive state store, a client-side router, and a component model — in one cohesive codebase. The ultimate JavaScript project: build the thing that builds your apps."},
+    {lang:"nodejs",  name:"Production-Grade API Boilerplate (open-source)",
+     desc:"A thoroughly designed, open-sourceable Node.js API starter — authentication, rate limiting, database migrations, structured logging, health checks, Docker configuration, CI pipeline, and extensive README. Something you'd actually use as a starting point."},
+    {lang:"react",   name:"React Clone — Mini (reconciler + hooks)",
+     desc:"An implementation of React's core — createElement, a fiber-based reconciler, useState, useEffect, and useRef — in ~300 lines. The project that makes every React bug, optimization, and design decision make complete sense."},
+    {lang:"html",    name:"Complete Design Token System (multi-brand)",
+     desc:"A design token system supporting multiple brand themes — generated from a single JSON source of truth into CSS custom properties, SCSS variables, and a JavaScript theme object. A real deliverable for a design system used across multiple products."},
+    {lang:"flutter", name:"Full Production Flutter App (publish to store)",
+     desc:"A complete, polished Flutter app with production architecture, CI/CD pipeline, crash reporting, analytics, A/B testing, and a complete store listing — ready for the App Store and Play Store. Everything you've learned in Flutter, shipped."},
+    {lang:"rust",    name:"Full Systems-Level Project (choose your own)",
+     desc:"Your capstone Rust project — a database engine, a network proxy, a programming language, an OS kernel module, or a game engine — chosen based on what you're most excited about. All 40 weeks of Rust knowledge applied to one substantial system."},
+    {lang:"c",       name:"Simple Unix Shell (fork + exec + pipes)",
+     desc:"A functional Unix shell — command parsing, process creation via fork(), program execution via execvp(), pipe chaining with pipe() and dup2(), and built-ins like cd and exit. One of the most educational C projects that exists."},
+    {lang:"cpp",     name:"Complete Design Patterns Demo App",
+     desc:"A cohesive C++ application — a text editor, a game, a graphics tool — that naturally incorporates 10+ design patterns at the right places rather than forced examples. Demonstrating mature C++ design judgment."},
+    {lang:"csharp",  name:"Full CRUD Web Application (MVC + EF + Auth)",
+     desc:"A fully deployed ASP.NET Core MVC application — database via EF Core, Identity for user accounts, role-based authorization, Razor views, and a CI/CD pipeline deploying to Azure or a VPS. The end-to-end .NET web development experience."},
+    {lang:"java",    name:"Spring Boot Microservice (Docker-ready)",
+     desc:"A production-grade Spring Boot microservice — REST API, JPA data layer, Kafka or RabbitMQ integration for async events, Dockerfile, docker-compose, health endpoints, and Actuator metrics. The Java microservice pattern used in enterprise systems globally."},
+    {lang:"asm",     name:"Simple Bootloader (MBR, real mode, prints text)",
+     desc:"A 512-byte Master Boot Record bootloader that runs in x86 real mode — sets up the segment registers, uses BIOS INT 10h to print a string to the screen, and halts the CPU. The first 512 bytes that execute when a computer starts. Nothing beneath this."},
+  ]},
+];
+
+// ─── LANG CONFIG ─────────────────────────────────────────────────
+const LANG = {
+  python:  { label:"Python",   cls:"pill-py"     },
+  js:      { label:"JS",       cls:"pill-js"     },
+  nodejs:  { label:"Node.js",  cls:"pill-node"   },
+  react:   { label:"React",    cls:"pill-react"  },
+  html:    { label:"HTML/CSS", cls:"pill-html"   },
+  flutter: { label:"Flutter",  cls:"pill-flutter"},
+  rust:    { label:"Rust",     cls:"pill-rust"   },
+  c:       { label:"C",        cls:"pill-c"      },
+  cpp:     { label:"C++",      cls:"pill-cpp"    },
+  csharp:  { label:"C#",       cls:"pill-csharp" },
+  java:    { label:"Java",     cls:"pill-java"   },
+  asm:     { label:"ASM",      cls:"pill-asm"    },
+};
+
+const PHASE_INFO = {
+  1:{ label:"Phase 1 — Foundation",   cls:"pp1", color:"var(--phase1)", diff:"Beginner → Early Intermediate" },
+  2:{ label:"Phase 2 — Intermediate", cls:"pp2", color:"var(--phase2)", diff:"Intermediate → Advanced" },
+  3:{ label:"Phase 3 — Advanced",     cls:"pp3", color:"var(--phase3)", diff:"Advanced → Pro" },
+  4:{ label:"Phase 4 — Pro",          cls:"pp4", color:"var(--phase4)", diff:"Pro" },
+};
+
+const DIFF_CLS = {
+  "Beginner":"diff-beginner","Beginner→Intermediate":"diff-beginner",
+  "Intermediate":"diff-intermediate","Intermediate (Flutter: Beginner)":"diff-intermediate",
+  "Intermediate→Advanced":"diff-intermediate","Advanced (C Family: Beginner)":"diff-advanced",
+  "Advanced":"diff-advanced","Advanced→Pro":"diff-advanced","Pro":"diff-pro",
+};
+
+function getWeekDate(weekNum) {
+  const start = new Date(2026, 2, 16);
+  const d = new Date(start);
+  d.setDate(d.getDate() + (weekNum-1)*7);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+
+function render() {
+  const container = document.getElementById('roadmap');
+  let currentPhase = null;
+
+  WEEKS.forEach(w => {
+    if (w.active && w.phase !== currentPhase) {
+      currentPhase = w.phase;
+      const pi = PHASE_INFO[currentPhase];
+      const ph = document.createElement('div');
+      ph.className = 'phase-header';
+      ph.innerHTML = `<span class="phase-pill ${pi.cls}">${pi.label}</span><div class="phase-divider"></div><p>${pi.diff}</p>`;
+      container.appendChild(ph);
+    }
+    if (w.transition && w.phase !== currentPhase) currentPhase = w.phase;
+
+    const outer = document.createElement('div');
+    outer.style.padding = '0 24px 0';
+
+    const row = document.createElement('div');
+    const isBreak = !w.active && !w.transition;
+    const isTrans = !!w.transition;
+    row.className = `week-card ${isBreak?'break-week':''} ${isTrans?'transition-week':''} ${w.active?'p'+w.phase:''}`;
+
+    const date = getWeekDate(w.week);
+    const phaseColor = w.phase ? PHASE_INFO[w.phase]?.color : 'var(--muted)';
+
+    row.innerHTML = `
+      <div class="week-sidebar">
+        <div class="week-label">Week</div>
+        <div class="week-num">${String(w.week).padStart(2,'0')}</div>
+        <div class="week-date">${date}</div>
+        <div class="phase-dot" style="background:${phaseColor}"></div>
+      </div>
+    `;
+
+    const content = document.createElement('div');
+    if (!w.active) {
+      content.className = 'break-content';
+      content.innerHTML = `
+        <div class="break-icon">${isTrans?'⟳':'◌'}</div>
+        <div>
+          <div class="break-text">${w.label}</div>
+          <div class="break-sub">${w.sub}</div>
+        </div>`;
+    } else {
+      content.className = 'week-content';
+      const diffCls = DIFF_CLS[w.diff] || 'diff-intermediate';
+      let html = `<div class="difficulty ${diffCls}">${w.diff}</div><div class="projects-grid">`;
+      w.projects.forEach((p, idx) => {
+        const l = LANG[p.lang];
+        const id = `proj-${w.week}-${idx}`;
+        html += `
+          <div class="project-row" data-id="${id}" tabindex="0" role="button" aria-expanded="false">
+            <div class="project-lang"><span class="pill ${l.cls}">${l.label}</span></div>
+            <div class="project-right">
+              <div class="project-name-row">
+                <span class="project-name">${p.name}</span>
+                <span class="expand-icon">▾</span>
+              </div>
+              <div class="project-desc" id="${id}">${p.desc}</div>
+            </div>
+          </div>`;
+      });
+      html += `</div>`;
+      content.innerHTML = html;
+
+      // Attach click handlers after setting innerHTML
+      requestAnimationFrame(() => {
+        content.querySelectorAll('.project-row').forEach(rowEl => {
+          const toggle = () => {
+            const descId = rowEl.getAttribute('data-id');
+            const desc = document.getElementById(descId);
+            const isOpen = rowEl.classList.contains('open');
+            rowEl.classList.toggle('open', !isOpen);
+            rowEl.setAttribute('aria-expanded', String(!isOpen));
+            desc.classList.toggle('visible', !isOpen);
+          };
+          rowEl.addEventListener('click', toggle);
+          rowEl.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();} });
+        });
+      });
+    }
+
+    row.appendChild(content);
+    outer.appendChild(row);
+    container.appendChild(outer);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
